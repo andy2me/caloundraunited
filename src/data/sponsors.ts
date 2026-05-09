@@ -17,15 +17,15 @@ export const sponsors: Sponsor[] = [
     imgStyle: 'max-height:96px; max-width:200px;',
   },
   {
-    name: 'Max Property',
-    tier: 'Principal',
-    logo: '/assets/sponsors/max.png',
-    ariaLabel: 'Max Property Group',
-  },
-  {
     name: 'Jericho — Eat Drink Local',
-    tier: 'Match Day',
+    tier: 'Principal',
     logo: '/assets/sponsors/jericho.png',
     ariaLabel: 'Jericho — Eat · Drink · Local',
+  },
+  {
+    name: 'Max Property',
+    tier: 'Match Day',
+    logo: '/assets/sponsors/max.png',
+    ariaLabel: 'Max Property Group',
   },
 ];
