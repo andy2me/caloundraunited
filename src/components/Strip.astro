@@ -12,6 +12,9 @@ const ord = (n: number): string => {
   return `${n}${['th','st','nd','rd'][n % 10] ?? 'th'}`;
 };
 
+const logoFor = (clubName: string): string | undefined =>
+  ladder.find((r) => r.club === clubName)?.logo;
+
 const lastResultClass = last ? (outcome(last) === 'W' ? 'win' : outcome(last) === 'L' ? 'loss' : 'draw') : '';
 const lastScoreLabel = last ? `${outcome(last)} ${last.result.gf}–${last.result.ga}` : '';
 
@@ -23,7 +26,7 @@ const nextDateLabel = next ? `${formatFixtureDate(next).replace(' · BYE', '')} 
     {next && (
       <div class="strip__cell">
         <span class="strip__label">Next ▸</span>
-        <OppCrest hue={next.opponentHue} label={next.opponentShort || 'TBC'} />
+        <OppCrest hue={next.opponentHue} label={next.opponentShort || 'TBC'} logo={logoFor(next.opponent)} />
         <span class="strip__opp">v {next.opponent}</span>
         <span class="strip__chip mono">{nextDateLabel}</span>
       </div>
@@ -41,7 +44,7 @@ const nextDateLabel = next ? `${formatFixtureDate(next).replace(' · BYE', '')} 
     {last && (
       <div class="strip__cell strip__cell--right">
         <span class="strip__label">Last ▸</span>
-        <OppCrest hue={last.opponentHue} label={last.opponentShort} />
+        <OppCrest hue={last.opponentHue} label={last.opponentShort} logo={logoFor(last.opponent)} />
         <span class="strip__opp">v {last.opponent}</span>
         <span class="strip__score"><span class={lastResultClass}>{lastScoreLabel}</span></span>
       </div>
