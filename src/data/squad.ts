@@ -117,3 +117,10 @@ export const avgAge = (players: Player[]): number => {
   if (withAge.length === 0) return 0;
   return Math.round(withAge.reduce((n, p) => n + (p.age ?? 0), 0) / withAge.length);
 };
+
+/**
+ * Stated squad average age — used on the home page hero. Override here when the
+ * roster turns over rather than back-filling individual `age` fields, since the
+ * site is happy showing a single team-wide number.
+ */
+export const teamAverageAge = 43;

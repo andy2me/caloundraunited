@@ -152,8 +152,25 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
   border-bottom-style: solid;
   border-bottom-color: rgba(255,255,255,0.6);
 }
-.nav__links .nav__cta a.btn:hover {
-  border-bottom-color: var(--paper);
+/* On the dark nav the default ghost-button hover (white bg + dark text) reads
+   as a jarring white block and offers no clear "interactive" affordance. Swap
+   to brand red on hover/focus so the call-to-action is unmistakable, and give
+   keyboard users a high-contrast focus ring. */
+.nav__links .nav__cta a.btn--ghost:hover,
+.nav__links .nav__cta a.btn--ghost:focus-visible {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  border-bottom-color: var(--red);
+}
+.nav__links .nav__cta a.btn--ghost:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.nav__links .nav__cta a.btn--ghost:active {
+  background: var(--red-deep);
+  border-color: var(--red-deep);
+  border-bottom-color: var(--red-deep);
 }
 
 /* hamburger */

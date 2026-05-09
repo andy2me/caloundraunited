@@ -68,6 +68,7 @@ export const fixtures: Fixture[] = [
     opponentHue: 0,
     venue: 'Palmview Sports Complex · Field 1',
     result: { gf: 4, ga: 0 },
+    reportSlug: 'round-03-eumundi-magpies',
   },
   {
     date: '2026-05-08T20:15',

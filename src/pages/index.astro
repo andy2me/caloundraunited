@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Placeholder from '../components/Placeholder.astro';
 import { stats, formLast5, lastFixture, outcome } from '../data/fixtures';
-import { squad, avgAge } from '../data/squad';
+import { squad, teamAverageAge } from '../data/squad';
 import { sponsors } from '../data/sponsors';
 import { site } from '../data/site';
 
@@ -24,7 +24,7 @@ const heroEyebrow = last
 
 const goalsLine = `${stats.gf} / ${stats.ga}`;
 const formLine = formLast5().join(' ');
-const teamAvgAge = avgAge(squad.filter((p) => p.group !== 'staff'));
+const teamAvgAge = teamAverageAge;
 
 const formatPostDate = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
 
