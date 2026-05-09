@@ -19,7 +19,7 @@ const teaserPlayers = squad.filter((p) => ['Andy Twomey', 'Marko Pajic', 'Dave T
 
 const last = lastFixture();
 const heroEyebrow = last
-  ? `Match Report · Round ${stats.played.toString().padStart(2, '0')}`
+  ? `Latest result · Round ${stats.played.toString().padStart(2, '0')}`
   : 'Latest from the Park';
 
 const goalsLine = `${stats.gf} / ${stats.ga}`;
@@ -39,6 +39,8 @@ const daysAgo = (d: Date) => {
   if (days < 30) return `${Math.floor(days / 7)} weeks ago`;
   return formatPostDate(d);
 };
+
+const lastDateLabel = last ? daysAgo(new Date(last.date)) : (featurePost ? daysAgo(featurePost.data.date) : 'this season');
 ---
 
 <BaseLayout title="Home" page="home">
@@ -59,20 +61,19 @@ const daysAgo = (d: Date) => {
             <span class="dot"></span>
             <span>{heroEyebrow}</span>
             <span style="opacity:.5;">·</span>
-            <span>{featurePost ? daysAgo(featurePost.data.date) : 'this season'}</span>
+            <span>{lastDateLabel}</span>
           </div>
           <h1 class="hero__title">
-            Three nil-all-overs<br/>
-            and we're still<br/>
-            <em>top of the form guide.</em>
+            Stella Swans 4.<br/>
+            Us 2.<br/>
+            <em>Onwards to Round 5.</em>
           </h1>
           <p class="hero__lede">
-            A scrappy 3–1 over Coolum Beach, two assists from a centre-back who claims he's never assisted in his life, and one (1) successful overhead kick.
-            Andy is taking it well.
+            The league leaders rolled into Palmview last Friday and put four past us in the second 40. Two for ours, four for theirs, and the very specific quiet of a Caloundra dressing room at full-time. Sitting fourth on six points after four rounds — Currimundi away on the 15th.
           </p>
           <div class="hero__cta">
-            <a class="btn btn--primary" href="/news">Read the report <span class="arrow">→</span></a>
-            <a class="btn btn--ghost" href="/fixtures">Full fixtures</a>
+            <a class="btn btn--primary" href="/fixtures">Fixtures &amp; results <span class="arrow">→</span></a>
+            <a class="btn btn--ghost" href="/table">League table</a>
           </div>
         </div>
         <div class="hero__meta">

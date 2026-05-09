@@ -29,14 +29,14 @@ export type LadderRow = {
 };
 
 export const ladder: LadderRow[] = [
-  { club: 'Stella Swans',       short: 'SS', hue: 220, logo: '/assets/clubs/stella-swans.png',   played: 4, won: 3, drawn: 1, lost: 0, gf: 14, ga: 6,  points: 10 },
-  { club: 'Currimundi Cobias',  short: 'CC', hue: 50,  logo: '/assets/clubs/currimundi.jpg',     played: 4, won: 2, drawn: 1, lost: 1, gf: 14, ga: 6,  points: 7  },
-  { club: 'Buddina United',     short: 'BU', hue: 200, logo: '/assets/clubs/buddina-united.png', played: 4, won: 2, drawn: 1, lost: 1, gf: 15, ga: 7,  points: 7  },
-  { club: 'Caloundra United',   short: 'CU', hue: 0,                                              played: 4, won: 2, drawn: 0, lost: 2, gf: 14, ga: 11, points: 6, isUs: true },
-  { club: 'Coolum Hammers',     short: 'CH', hue: 30,                                             played: 4, won: 2, drawn: 0, lost: 2, gf: 11, ga: 15, points: 6  },
-  { club: 'Buderim Power',      short: 'BP', hue: 210, logo: '/assets/clubs/buderim.png',        played: 4, won: 1, drawn: 2, lost: 1, gf: 9,  ga: 7,  points: 5  },
-  { club: 'Unity Strikers',     short: 'US', hue: 240, logo: '/assets/clubs/unity-strikers.jpg', played: 4, won: 1, drawn: 1, lost: 2, gf: 5,  ga: 13, points: 4  },
-  { club: 'Eumundi Platinum',   short: 'EP', hue: 0,   logo: '/assets/clubs/eumundi.png',        played: 4, won: 0, drawn: 0, lost: 4, gf: 5,  ga: 22, points: 0  },
+  { club: 'Stella Swans',       short: 'SS', hue: 220, logo: '/assets/clubs/stella-swans.png',   played: 4, won: 3, drawn: 1, lost: 0, gf: 14, ga: 6,  points: 10, form: ['W','D','W','W'] },
+  { club: 'Currimundi Cobias',  short: 'CC', hue: 50,  logo: '/assets/clubs/currimundi.jpg',     played: 4, won: 2, drawn: 1, lost: 1, gf: 14, ga: 6,  points: 7,  form: ['L','W','D','W'] },
+  { club: 'Buddina United',     short: 'BU', hue: 200, logo: '/assets/clubs/buddina-united.png', played: 4, won: 2, drawn: 1, lost: 1, gf: 15, ga: 7,  points: 7,  form: ['W','L','D','W'] },
+  { club: 'Caloundra United',   short: 'CU', hue: 0,                                              played: 4, won: 2, drawn: 0, lost: 2, gf: 14, ga: 11, points: 6,  form: ['L','W','W','L'], isUs: true },
+  { club: 'Coolum Hammers',     short: 'CH', hue: 30,                                             played: 4, won: 2, drawn: 0, lost: 2, gf: 11, ga: 15, points: 6,  form: ['W','W','L','L'] },
+  { club: 'Buderim Power',      short: 'BP', hue: 210, logo: '/assets/clubs/buderim.png',        played: 4, won: 1, drawn: 2, lost: 1, gf: 9,  ga: 7,  points: 5,  form: ['W','D','D','L'] },
+  { club: 'Unity Strikers',     short: 'US', hue: 240, logo: '/assets/clubs/unity-strikers.jpg', played: 4, won: 1, drawn: 1, lost: 2, gf: 5,  ga: 13, points: 4,  form: ['L','L','D','W'] },
+  { club: 'Eumundi Platinum',   short: 'EP', hue: 0,   logo: '/assets/clubs/eumundi.png',        played: 4, won: 0, drawn: 0, lost: 4, gf: 5,  ga: 22, points: 0,  form: ['L','L','L','L'] },
 ];
 
 export const TOP4_CUTOFF = 4;

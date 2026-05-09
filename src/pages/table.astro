@@ -31,6 +31,12 @@ const tierFor = (row: typeof ladder[number], position: number): 'us' | 'top' | '
 const last5Won = usForm.filter((r) => r === 'W').length;
 const last5Drew = usForm.filter((r) => r === 'D').length;
 const last5Pts = last5Won * 3 + last5Drew;
+
+// Axis labels run from 0 to the leader's points, scaled so 80% width = topPts.
+// The 100% rightmost tick is therefore topPts * 1.25, which we round up to a
+// nice multiple of 5 (and never below 5) so the labels are clean integers.
+const axisCeil = Math.max(5, Math.ceil((topPts * 1.25) / 5) * 5);
+const axisLabels = [0, 1, 2, 3, 4, 5].map((i) => Math.round((axisCeil * i) / 5));
 ---
 
 <BaseLayout title="League Table" page="table">
@@ -40,7 +46,7 @@ const last5Pts = last5Won * 3 + last5Drew;
       <div class="pagehead__inner">
         <div class="pagehead__eyebrow">2026 Season · Churches Sunshine Coast O35 Division · After Round {String(stats.played).padStart(2, '0')}</div>
         <h1 class="pagehead__title">League Table</h1>
-        <p class="pagehead__lede">Ten teams, eighteen rounds, three points for a win, one for a draw, and zero excuses for the bottom four. Updated within 24 hours of full-time.</p>
+        <p class="pagehead__lede">Eight clubs, fourteen rounds, three points for a win, one for a draw, and zero excuses for the bottom four. Updated within 24 hours of full-time.</p>
       </div>
     </div>
   </header>
@@ -97,7 +103,7 @@ const last5Pts = last5Won * 3 + last5Drew;
 
       <div class="ladder-chart" role="figure" aria-label={`Points by club, after Round ${stats.played}`}>
         <div class="ladder-chart__axis mono" aria-hidden="true">
-          <span>0</span><span>4</span><span>8</span><span>12</span><span>16</span><span>20</span>
+          {axisLabels.map((n) => <span>{n}</span>)}
         </div>
 
         {ladder.map((row, i) => {
