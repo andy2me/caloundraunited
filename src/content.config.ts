@@ -14,6 +14,8 @@ const news = defineCollection({
     feature: z.boolean().default(false),           // first feature post on /news and /
     /** Optional path to a hero image under /public, e.g. "/assets/news/round06.jpg" */
     image: z.string().optional(),
+    /** Optional YouTube embed URL (https://www.youtube.com/embed/<id>...). Replaces the hero image when set. */
+    videoUrl: z.string().optional(),
   }),
 });
 

@@ -77,8 +77,9 @@ export const fixtures: Fixture[] = [
     opponent: 'Stella Swans',
     opponentShort: 'SS',
     opponentHue: 220,
-    venue: 'Palmview Sports Complex · Field 1',
+    venue: 'Kelman St',
     result: { gf: 2, ga: 4 },
+    reportSlug: 'round-04-stella-swans',
   },
   {
     date: '2026-05-15T18:30',

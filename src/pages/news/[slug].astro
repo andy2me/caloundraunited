@@ -38,7 +38,21 @@ const older = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
   <section class="section section--paper" data-screen-label="02 Body">
     <div class="container">
       <div style="margin-bottom:32px;">
-        <Placeholder corner="[ HERO 16:9 ]" label={post.data.heroLabel} variant="ph--wide" />
+        {post.data.videoUrl ? (
+          <div class="post-video">
+            <iframe
+              src={post.data.videoUrl}
+              title={post.data.title}
+              loading="lazy"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
+        ) : (
+          <Placeholder corner="[ HERO 16:9 ]" label={post.data.heroLabel} variant="ph--wide" />
+        )}
       </div>
 
       <article class="post-body" style="max-width: 72ch; margin: 0 auto;">
@@ -108,5 +122,53 @@ const older = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
     color: inherit;
     border-bottom: 2px solid var(--red);
     padding-bottom: 1px;
+  }
+  .post-body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0 32px;
+    font-size: 15px;
+  }
+  .post-body :global(thead th) {
+    text-align: left;
+    font-family: var(--mono, ui-monospace, monospace);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .post-body :global(tbody td) {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+  }
+  .post-body :global(hr) {
+    border: 0;
+    border-top: 1px solid var(--hairline);
+    margin: 36px 0;
+  }
+  .post-body :global(blockquote) {
+    border-left: 3px solid var(--red);
+    margin: 24px 0;
+    padding: 4px 0 4px 18px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .post-video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border: 1px solid var(--hairline);
+  }
+  .post-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
   }
 </style>
