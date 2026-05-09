@@ -158,11 +158,12 @@ const lastDateLabel = last ? daysAgo(new Date(last.date)) : (featurePost ? daysA
         {teaserPlayers.map((p) => (
           <article class="player" style="background:transparent; border-color: rgba(255,255,255,0.18);">
             <div class="ph ph--dark">
+              {p.image && <img class="ph__img" src={`/assets/players/${p.image}`} alt={p.name} loading="lazy" />}
               {p.num !== undefined && <span class="player__num">{p.num}</span>}
               <span class="player__pos" style="background:rgba(0,0,0,0.55); color:#fff; border-color:rgba(255,255,255,0.2);">
                 {p.isCaptain ? 'CAPT' : p.position.replace(' · CAPT', '')}
               </span>
-              <span class="ph__label">{p.imageLabel}</span>
+              {!p.image && p.imageLabel && <span class="ph__label">{p.imageLabel}</span>}
             </div>
             <div class="player__body">
               <div class="player__name" style="color:#fff;">{p.name}</div>
