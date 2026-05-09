@@ -111,6 +111,8 @@ const last5Pts = last5Won * 3 + last5Drew;
                 <span class="ladder-row__crest">
                   {row.isUs ? (
                     <img src="/assets/crest.png" alt="" />
+                  ) : row.logo ? (
+                    <img src={row.logo} alt="" />
                   ) : (
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <rect width="24" height="24" fill="#0E0E10"/>
@@ -128,7 +130,7 @@ const last5Pts = last5Won * 3 + last5Drew;
                   </div>
                 </div>
                 <span class="ladder-row__form mono">
-                  {row.form.map((r) => <i class={`form-pip ${r}`}></i>)}
+                  {(row.form ?? []).map((r) => <i class={`form-pip ${r}`}></i>)}
                 </span>
               </div>
               {position === TOP4_CUTOFF && (
@@ -184,6 +186,8 @@ const last5Pts = last5Won * 3 + last5Drew;
                   <td class="col-crest">
                     {row.isUs ? (
                       <img src="/assets/crest.png" alt="" class="crest-img" />
+                    ) : row.logo ? (
+                      <img src={row.logo} alt="" class="crest-img" />
                     ) : (
                       <span class="crest-dot" style={`background:oklch(0.55 0.14 ${row.hue});`}>{row.short}</span>
                     )}

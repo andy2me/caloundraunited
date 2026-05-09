@@ -156,6 +156,8 @@ const usForm = (() => {
                 <span class="ladder-row__crest">
                   {row.isUs ? (
                     <img src="/assets/crest.png" alt="" />
+                  ) : row.logo ? (
+                    <img src={row.logo} alt="" />
                   ) : (
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <rect width="24" height="24" fill="#0E0E10"/>
@@ -173,7 +175,7 @@ const usForm = (() => {
                   </div>
                 </div>
                 <span class="ladder-row__form mono">
-                  {row.form.map((r) => <i class={`form-pip ${r}`}></i>)}
+                  {(row.form ?? []).map((r) => <i class={`form-pip ${r}`}></i>)}
                 </span>
               </div>
               {position === top4Cutoff && (
