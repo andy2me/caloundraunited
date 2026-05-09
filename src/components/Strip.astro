@@ -1,0 +1,50 @@
+---
+import { nextFixture, lastFixture, formatFixtureDate, outcome } from '../data/fixtures';
+import { ladder, ourPosition, usRow } from '../data/ladder';
+import OppCrest from './OppCrest.astro';
+
+const next = nextFixture();
+const last = lastFixture();
+const us = usRow();
+const pos = ourPosition();
+const ord = (n: number): string => {
+  if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`;
+  return `${n}${['th','st','nd','rd'][n % 10] ?? 'th'}`;
+};
+
+const lastResultClass = last ? (outcome(last) === 'W' ? 'win' : outcome(last) === 'L' ? 'loss' : 'draw') : '';
+const lastScoreLabel = last ? `${outcome(last)} ${last.result.gf}–${last.result.ga}` : '';
+
+const nextDateLabel = next ? `${formatFixtureDate(next).replace(' · BYE', '')} · ${next.venue.split(' · ')[0]} (${next.homeAway})` : 'TBC';
+---
+
+<div class="strip" aria-label="Latest match info">
+  <div class="container strip__inner">
+    {next && (
+      <div class="strip__cell">
+        <span class="strip__label">Next ▸</span>
+        <OppCrest hue={next.opponentHue} label={next.opponentShort || 'TBC'} />
+        <span class="strip__opp">v {next.opponent}</span>
+        <span class="strip__chip mono">{nextDateLabel}</span>
+      </div>
+    )}
+    <div class="strip__cell strip__cell--mid">
+      <span class="strip__label">League</span>
+      <span class="strip__chip mono">
+        <a href="/table" style="text-decoration:none;color:inherit;">
+          {us
+            ? `P ${us.played} · W ${us.won} · D ${us.drawn} · L ${us.lost} · ${ord(pos)}`
+            : 'See full table'}
+        </a>
+      </span>
+    </div>
+    {last && (
+      <div class="strip__cell strip__cell--right">
+        <span class="strip__label">Last ▸</span>
+        <OppCrest hue={last.opponentHue} label={last.opponentShort} />
+        <span class="strip__opp">v {last.opponent}</span>
+        <span class="strip__score"><span class={lastResultClass}>{lastScoreLabel}</span></span>
+      </div>
+    )}
+  </div>
+</div>

@@ -1,0 +1,48 @@
+---
+import { site } from '../data/site';
+
+type ActivePage = 'home' | 'fixtures' | 'table' | 'squad' | 'news' | 'contact' | '';
+type Props = { active?: ActivePage };
+const { active = '' } = Astro.props;
+
+const links: { href: string; label: string; key: ActivePage }[] = [
+  { href: '/',          label: 'Home',     key: 'home' },
+  { href: '/fixtures',  label: 'Fixtures', key: 'fixtures' },
+  { href: '/table',     label: 'Table',    key: 'table' },
+  { href: '/squad',     label: 'Squad',    key: 'squad' },
+  { href: '/news',      label: 'News',     key: 'news' },
+  { href: '/contact',   label: 'Contact',  key: 'contact' },
+];
+---
+
+<nav class="nav" id="siteNav" aria-label="Primary">
+  <div class="container nav__inner">
+    <a class="brand" href="/" aria-label={`${site.team} home`}>
+      <img src="/assets/crest.png" class="brand__crest" alt="Caloundra City Soccer Club crest" />
+      <div>
+        <div class="brand__name">{site.team}</div>
+        <div class="brand__sub">{site.sub}</div>
+      </div>
+    </a>
+    <ul class="nav__links">
+      {links.map((l) => (
+        <li><a href={l.href} class={active === l.key ? 'is-active' : ''}>{l.label}</a></li>
+      ))}
+      <li class="nav__cta"><a class="btn btn--ghost" href="/contact">Want to play? <span class="arrow">→</span></a></li>
+    </ul>
+    <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+    </button>
+  </div>
+</nav>
+
+<script>
+  const burger = document.getElementById('navBurger');
+  const nav = document.getElementById('siteNav');
+  if (burger && nav) {
+    burger.addEventListener('click', () => {
+      const open = nav.classList.toggle('is-open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+</script>

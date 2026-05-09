@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortedByDate, byMonth, formatFixtureDate, outcome, stats, nextFixture, type Fixture, type Played } from '../data/fixtures';
+import { ourPosition, ladder, barWidth } from '../data/ladder';
+
+const groups = byMonth(sortedByDate);
+const next = nextFixture();
+const pos = ourPosition();
+const ord = (n: number): string => {
+  if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`;
+  return `${n}${['th','st','nd','rd'][n % 10] ?? 'th'}`;
+};
+
+const ladderTop8 = ladder.slice(0, 8);
+const top4Cutoff = 4;
+
+const tierFor = (row: typeof ladder[number], position: number): 'us' | 'top' | 'mid' =>
+  row.isUs ? 'us' : position <= top4Cutoff ? 'top' : 'mid';
+
+const usForm = (() => {
+  const us = ladder.find((r) => r.isUs);
+  return us?.form ?? [];
+})();
+---
+
+<BaseLayout title="Fixtures &amp; Results" page="fixtures">
+
+  <header class="pagehead" data-screen-label="01 Page header">
+    <div class="container">
+      <div class="pagehead__inner">
+        <div class="pagehead__eyebrow">2026 Season · Churches Sunshine Coast O35 Division</div>
+        <h1 class="pagehead__title">Fixtures &amp; Results</h1>
+        <p class="pagehead__lede">Eighteen rounds. One bye we're already counting on. All the kick-offs, scorelines, and unfortunate match-day decisions, in chronological order.</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section section--paper" style="padding-top:48px;" data-screen-label="02 Form summary">
+    <div class="container">
+      <div style="display:grid; grid-template-columns: repeat(6, 1fr); gap:0; border:1px solid var(--hairline); background:var(--paper);">
+        <div style="padding:18px 20px; border-right:1px solid var(--hairline);">
+          <div class="mono" style="font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Played</div>
+          <div style="font-family:var(--display); font-weight:800; font-size:32px;">{stats.played}</div>
+        </div>
+        <div style="padding:18px 20px; border-right:1px solid var(--hairline);">
+          <div class="mono" style="font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Won</div>
+          <div style="font-family:var(--display); font-weight:800; font-size:32px; color:#1f7a3a;">{stats.won}</div>
+        </div>
+        <div style="padding:18px 20px; border-right:1px solid var(--hairline);">
+          <div class="mono" style="font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Drawn</div>
+          <div style="font-family:var(--display); font-weight:800; font-size:32px;">{stats.drawn}</div>
+        </div>
+        <div style="padding:18px 20px; border-right:1px solid var(--hairline);">
+          <div class="mono" style="font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Lost</div>
+          <div style="font-family:var(--display); font-weight:800; font-size:32px; color:var(--red);">{stats.lost}</div>
+        </div>
+        <div style="padding:18px 20px; border-right:1px solid var(--hairline);">
+          <div class="mono" style="font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Goals</div>
+          <div style="font-family:var(--display); font-weight:800; font-size:32px;" class="mono">{stats.gf}<span style="color:var(--muted); font-size:24px;">/</span>{stats.ga}</div>
+        </div>
+        <div style="padding:18px 20px;">
+          <div class="mono" style="font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">League position</div>
+          <div style="font-family:var(--display); font-weight:800; font-size:32px;">{pos}<span style="font-size:18px; color:var(--muted);">{ord(pos).slice(-2)}</span></div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:8px; margin:36px 0 18px; flex-wrap:wrap;">
+        <button class="btn btn--ghost-ink" style="padding:10px 16px; font-size:12px; background:var(--ink); color:#fff; border-color:var(--ink);">All</button>
+        <button class="btn btn--ghost-ink" style="padding:10px 16px; font-size:12px;">Home</button>
+        <button class="btn btn--ghost-ink" style="padding:10px 16px; font-size:12px;">Away</button>
+        <button class="btn btn--ghost-ink" style="padding:10px 16px; font-size:12px;">League</button>
+        <button class="btn btn--ghost-ink" style="padding:10px 16px; font-size:12px;">Cup</button>
+        <span style="margin-left:auto; align-self:center;" class="mono">
+          <a href="#" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); border-bottom:2px solid var(--red); padding-bottom:2px;">Subscribe to calendar (.ics)</a>
+        </span>
+      </div>
+
+      <table class="fixtures-table">
+        <thead>
+          <tr>
+            <th class="col-date">Date</th>
+            <th class="col-comp">Competition</th>
+            <th class="col-ha"></th>
+            <th class="col-opp">Opponent</th>
+            <th class="col-venue">Venue</th>
+            <th class="col-score">Score</th>
+            <th class="col-link"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {groups.map(({ month, rows }) => (
+            <Fragment>
+              <tr class="month-row"><td colspan="7">{month}</td></tr>
+              {rows.map((f: Fixture) => {
+                const isNext = next && f.date === next.date && f.opponent === next.opponent;
+                const result = f.result;
+                const o = result ? outcome(f as Played) : undefined;
+                return (
+                  <tr style={isNext ? 'background:rgba(200,11,31,0.04);' : undefined}>
+                    <td class="col-date" style={isNext ? 'color:var(--red);' : undefined}>{formatFixtureDate(f)}</td>
+                    <td class="col-comp">{f.comp}</td>
+                    <td class="col-ha">
+                      {f.homeAway === 'H' && <span class="tag tag--h">H</span>}
+                      {f.homeAway === 'A' && <span class="tag tag--a">A</span>}
+                    </td>
+                    <td class="col-opp" style={f.bye ? 'color:var(--muted); font-weight:500;' : undefined}>{f.opponent}</td>
+                    <td class="col-venue">{f.venue}</td>
+                    <td class="col-score">
+                      {result ? (
+                        <span class="result"><span class={`result-badge ${o}`}>{o}</span>{result.gf}–{result.ga}</span>
+                      ) : f.bye ? (
+                        <span class="score-tbd">—</span>
+                      ) : (
+                        <span class="score-tbd">— : —</span>
+                      )}
+                    </td>
+                    <td class="col-link">
+                      {f.reportSlug ? <a href={`/news/${f.reportSlug}`}>Report</a>
+                        : isNext ? <a href="#">Preview</a>
+                        : null}
+                    </td>
+                  </tr>
+                );
+              })}
+            </Fragment>
+          ))}
+        </tbody>
+      </table>
+
+      <p class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:24px;">
+        All times AEST · Kick-off may vary based on pitch availability · Confirmed via WhatsApp by Thursday
+      </p>
+    </div>
+  </section>
+
+  <!-- LADDER MODULE -->
+  <section class="section section--paper" style="padding-top:16px;" data-screen-label="03 Where we sit">
+    <div class="container">
+      <header class="section__head">
+        <div>
+          <span class="section__eyebrow">Where we sit</span>
+          <h2 class="section__title">League Ladder</h2>
+        </div>
+        <a class="section__more" href="/table">Full table →</a>
+      </header>
+
+      <div class="ladder-chart" role="figure" aria-label={`Points by club, after Round ${stats.played}`}>
+        {ladderTop8.map((row, i) => {
+          const position = i + 1;
+          const tier = tierFor(row, position);
+          const w = barWidth(row.points);
+          return (
+            <Fragment>
+              <div class={`ladder-row ladder-row--${tier}`} data-pos={position} aria-current={row.isUs ? 'true' : undefined}>
+                <span class="ladder-row__pos">{position}</span>
+                <span class="ladder-row__crest">
+                  {row.isUs ? (
+                    <img src="/assets/crest.png" alt="" />
+                  ) : (
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <rect width="24" height="24" fill="#0E0E10"/>
+                      <circle cx="12" cy="12" r="7" fill={`oklch(0.55 0.14 ${row.hue})`}/>
+                      <text x="12" y="15" text-anchor="middle" font-family="Barlow Condensed" font-weight="800" font-size="9" fill="#fff">{row.short}</text>
+                    </svg>
+                  )}
+                </span>
+                <span class="ladder-row__club">
+                  {row.isUs ? <strong>{row.club}</strong> : row.club}
+                </span>
+                <div class="ladder-row__bar">
+                  <div class={`bar bar--${tier}`} style={`width: ${w}%;`}>
+                    <span class="bar__pts">{row.points}</span>
+                  </div>
+                </div>
+                <span class="ladder-row__form mono">
+                  {row.form.map((r) => <i class={`form-pip ${r}`}></i>)}
+                </span>
+              </div>
+              {position === top4Cutoff && (
+                <div class="ladder-divider mono"><span>Top 4 cut-off · finals series</span></div>
+              )}
+            </Fragment>
+          );
+        })}
+      </div>
+
+      <p class="ladder-foot">Bar length proportional to points · After Round {String(stats.played).padStart(2, '0')} · <a href="/table" style="color:var(--red); border-bottom:1px solid var(--red); padding-bottom:1px;">See full table →</a></p>
+    </div>
+  </section>
+
+</BaseLayout>

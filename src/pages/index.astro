@@ -1,0 +1,201 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { stats, formLast5, lastFixture, outcome } from '../data/fixtures';
+import { squad, avgAge } from '../data/squad';
+import { sponsors } from '../data/sponsors';
+import { site } from '../data/site';
+
+const posts = (await getCollection('news'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const featurePost = posts.find((p) => p.data.feature) ?? posts[0];
+const recentPosts = posts
+  .filter((p) => p.id !== featurePost?.id)
+  .slice(0, 4);
+
+const teaserPlayers = squad.filter((p) => ['Andy Twomey', 'Marko Pajic', 'Dave Thompson', 'Pete Hollings'].includes(p.name));
+
+const last = lastFixture();
+const heroEyebrow = last
+  ? `Match Report · Round ${stats.played.toString().padStart(2, '0')}`
+  : 'Latest from the Park';
+
+const goalsLine = `${stats.gf} / ${stats.ga}`;
+const formLine = formLast5().join(' ');
+const teamAvgAge = avgAge(squad.filter((p) => p.group !== 'staff'));
+
+const formatPostDate = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+
+// rough days-ago for the hero eyebrow
+const daysAgo = (d: Date) => {
+  const now = new Date();
+  const ms = now.getTime() - d.getTime();
+  const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 7) return `${days} days ago`;
+  if (days < 30) return `${Math.floor(days / 7)} weeks ago`;
+  return formatPostDate(d);
+};
+---
+
+<BaseLayout title="Home" page="home">
+
+  <!-- HERO -->
+  <section class="hero" data-screen-label="01 Hero">
+    <div class="hero__media">
+      <Placeholder
+        variant="ph--hero ph--dark"
+        corner="[ MATCH PHOTO 16:9 — DROP A HERO IMAGE HERE ]"
+        label="teamphoto.jpg · 1920×1080"
+      />
+    </div>
+    <div class="container">
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <div class="hero__eyebrow">
+            <span class="dot"></span>
+            <span>{heroEyebrow}</span>
+            <span style="opacity:.5;">·</span>
+            <span>{featurePost ? daysAgo(featurePost.data.date) : 'this season'}</span>
+          </div>
+          <h1 class="hero__title">
+            Three nil-all-overs<br/>
+            and we're still<br/>
+            <em>top of the form guide.</em>
+          </h1>
+          <p class="hero__lede">
+            A scrappy 3–1 over Coolum Beach, two assists from a centre-back who claims he's never assisted in his life, and one (1) successful overhead kick.
+            Andy is taking it well.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="/news">Read the report <span class="arrow">→</span></a>
+            <a class="btn btn--ghost" href="/fixtures">Full fixtures</a>
+          </div>
+        </div>
+        <div class="hero__meta">
+          <div class="hero__metaItem">
+            <span class="k">Form (last 5)</span>
+            <span class="v mono">{formLine}</span>
+          </div>
+          <div class="hero__metaItem">
+            <span class="k">Goals For / Against</span>
+            <span class="v mono">{goalsLine}</span>
+          </div>
+          <div class="hero__metaItem">
+            <span class="k">Average age</span>
+            <span class="v mono">{teamAvgAge}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LATEST NEWS -->
+  <section class="section section--paper" data-screen-label="02 Latest news">
+    <div class="container">
+      <header class="section__head">
+        <div>
+          <span class="section__eyebrow">Newsroom · Updated weekly</span>
+          <h2 class="section__title">Latest from the Park</h2>
+        </div>
+        <a class="section__more" href="/news">All news →</a>
+      </header>
+
+      {featurePost && (
+        <article class="feature">
+          <Placeholder corner="[ FEATURE 16:10 ]" label={featurePost.data.heroLabel} />
+          <div class="feature__body">
+            <div class="card__cat">{featurePost.data.category} · {formatPostDate(featurePost.data.date)}</div>
+            <h3 class="feature__title">{featurePost.data.title}</h3>
+            <p style="color:var(--muted); margin: 0 0 22px; font-size:15px; line-height:1.6;">
+              {featurePost.data.excerpt}
+            </p>
+            <div style="display:flex; gap:14px; align-items:center;">
+              <a class="btn btn--ghost-ink" href={`/news/${featurePost.id}`}>Read more <span class="arrow">→</span></a>
+              <span class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);">{featurePost.data.readTime}</span>
+            </div>
+          </div>
+        </article>
+      )}
+
+      <div class="cards">
+        {recentPosts.map((p) => (
+          <article class="card">
+            <a href={`/news/${p.id}`} style="color:inherit; text-decoration:none; display:block;">
+              <Placeholder corner="[ 4:3 ]" label={p.data.heroLabel} />
+              <div class="card__body">
+                <div class="card__cat">{p.data.category} · {p.data.date.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</div>
+                <h3 class="card__title">{p.data.title}</h3>
+                <p class="card__excerpt">{p.data.excerpt}</p>
+                <div class="card__meta"><span>{p.data.readTime}</span><span class="arrow">→</span></div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SQUAD TEASER + JOIN CTA -->
+  <section class="section section--dark" data-screen-label="03 Squad teaser">
+    <div class="container">
+      <header class="section__head">
+        <div>
+          <span class="section__eyebrow" style="color:#fff;">Meet the eleven (and the bench)</span>
+          <h2 class="section__title">The Squad — Sort Of</h2>
+        </div>
+        <a class="section__more" href="/squad">All players →</a>
+      </header>
+
+      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+        {teaserPlayers.map((p) => (
+          <article class="player" style="background:transparent; border-color: rgba(255,255,255,0.18);">
+            <div class="ph ph--dark">
+              {p.num !== undefined && <span class="player__num">{p.num}</span>}
+              <span class="player__pos" style="background:rgba(0,0,0,0.55); color:#fff; border-color:rgba(255,255,255,0.2);">
+                {p.isCaptain ? 'CAPT' : p.position.replace(' · CAPT', '')}
+              </span>
+              <span class="ph__label">{p.imageLabel}</span>
+            </div>
+            <div class="player__body">
+              <div class="player__name" style="color:#fff;">{p.name}</div>
+              <div class="player__nick" style="color:rgba(255,255,255,0.6);">{p.nick}{p.num !== undefined && ` · #${p.num}`}</div>
+              <div class="player__stat" style="color:rgba(255,255,255,0.78); border-top-color:rgba(255,255,255,0.18);" set:html={p.stat} />
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr auto; align-items:center; gap:32px; margin-top:64px; padding:36px 0 0; border-top:1px solid rgba(255,255,255,0.18);">
+        <div>
+          <h3 style="font-size:clamp(28px,3.2vw,40px); margin:0 0 8px;">Over 35? Quietly furious about it? <em style="color:var(--red); font-style:normal;">We're recruiting.</em></h3>
+          <p style="color:rgba(255,255,255,0.7); margin:0; max-width:60ch;">No trials. No politics. Bring boots, shin pads, and a willingness to do the warm-up properly this time.</p>
+        </div>
+        <a class="btn btn--primary" href="/contact">Get in touch <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPONSORS -->
+  <section class="sponsors" data-screen-label="04 Partners">
+    <div class="container">
+      <div class="sponsors__head">
+        <span class="sponsors__eyebrow mono">/ Proudly partnered with</span>
+        <span class="sponsors__rule" aria-hidden="true"></span>
+        <a class="sponsors__more" href="/contact">Become a sponsor →</a>
+      </div>
+      <div class="sponsors__row">
+        {sponsors.map((s) => (
+          <a class="sponsors__logo" href={s.href ?? '#'} aria-label={s.ariaLabel ?? s.name}>
+            <img src={s.logo} alt={s.name} style={s.imgStyle} />
+            <span class="sponsors__tier mono">{s.tier}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

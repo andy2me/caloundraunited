@@ -1,0 +1,218 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { site } from '../data/site';
+
+// Web3Forms public access key — exposed at build time (this is a public key, safe to expose).
+// In .env (and on Vercel) set PUBLIC_WEB3FORMS_ACCESS_KEY=...
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? '';
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+---
+
+<BaseLayout title="Contact" page="contact">
+
+  <header class="pagehead" data-screen-label="01 Page header">
+    <div class="container">
+      <div class="pagehead__inner">
+        <div class="pagehead__eyebrow">Want to play · Want to sponsor · Want to complain</div>
+        <h1 class="pagehead__title">Get in Touch</h1>
+        <p class="pagehead__lede">Looking to join the squad, sponsor a kit, or argue with a refereeing decision from 2024? Drop us a line. We read everything. We answer most things.</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section section--paper" data-screen-label="02 Form + info">
+    <div class="container">
+      <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:64px; align-items:start;">
+
+        <!-- LEFT: Form -->
+        <form id="contactForm" class="stack" style="--stack: 22px;" novalidate>
+          <header style="margin-bottom:8px;">
+            <span class="section__eyebrow">Send a message</span>
+            <h2 class="section__title" style="font-size:40px; margin-top:6px;">Drop us a line</h2>
+          </header>
+
+          <!-- Web3Forms required fields -->
+          <input type="hidden" name="access_key" value={accessKey} />
+          <input type="hidden" name="subject" value="New contact form submission — caloundraunited.com" />
+          <input type="hidden" name="from_name" value={site.team} />
+          <input type="hidden" name="redirect" value="false" />
+          <!-- Honeypot: bots fill this; humans don't see it. -->
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off"
+                 style="position:absolute; left:-9999px; opacity:0;" aria-hidden="true" />
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:18px;">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" placeholder={`e.g. ${site.captain}`} required />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="topic">What's it about?</label>
+            <select id="topic" name="topic" style="font-family:var(--body); font-size:16px; padding:14px 16px; background:var(--paper); color:var(--ink); border:1px solid var(--hairline); border-radius:0; outline:none;">
+              <option>I want to play for the team</option>
+              <option>Sponsorship enquiry</option>
+              <option>Press / media</option>
+              <option>General question</option>
+              <option>An old refereeing grievance</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="A bit about yourself, your position, your last clean sheet, etc." required></textarea>
+          </div>
+
+          {turnstileSiteKey && (
+            <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+          )}
+
+          <div id="formStatus" role="status" aria-live="polite" style="display:none;"></div>
+
+          <div style="display:flex; gap:14px; align-items:center; padding-top:8px;">
+            <button id="submitBtn" class="btn btn--primary" type="submit">Send it <span class="arrow">→</span></button>
+            <span class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);">We reply within 48 hours · usually faster</span>
+          </div>
+        </form>
+
+        <!-- RIGHT: Info blocks -->
+        <aside style="display:flex; flex-direction:column; gap:24px;">
+
+          <div style="background:var(--ink); color:var(--paper); padding:32px;">
+            <span class="section__eyebrow" style="color:rgba(255,255,255,0.7);">Want to play?</span>
+            <h3 style="font-size:32px; margin:8px 0 12px; line-height:1; font-family:var(--display); font-weight:800; text-transform:uppercase;">
+              Over 35? <span style="color:var(--red);">We're recruiting.</span>
+            </h3>
+            <p style="color:rgba(255,255,255,0.78); font-size:14px; line-height:1.55; margin:0 0 18px;">
+              No trials, no politics. We carry sixteen, train Tuesday and Thursday, and play Saturdays in the Churches Sunshine Coast O35 division.
+              All abilities welcome — provided you bring boots, shin pads, and a willingness to do the warm-up properly.
+            </p>
+            <a class="btn btn--ghost" href={`mailto:${site.email}`}>Email us directly →</a>
+          </div>
+
+          <div style="border:1px solid var(--hairline); padding:28px; background:var(--paper);">
+            <span class="section__eyebrow">Direct line</span>
+            <div style="margin-top:16px; display:grid; grid-template-columns: auto 1fr; gap:14px 16px; font-size:14px;">
+              <span class="mono" style="color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.14em;">Captain</span>
+              <span><strong>{site.captain}</strong></span>
+              <span class="mono" style="color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.14em;">Email</span>
+              <a href={`mailto:${site.email}`} style="border-bottom:2px solid var(--red); padding-bottom:1px;">{site.email}</a>
+              <span class="mono" style="color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.14em;">League</span>
+              <span>{site.league}</span>
+              <span class="mono" style="color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.14em;">Home ground</span>
+              <span>{site.homeGround} · {site.homePitch}</span>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--hairline); padding:28px; background:var(--paper);">
+            <span class="section__eyebrow">Match day &amp; training</span>
+            <div style="margin-top:16px; display:grid; grid-template-columns: auto 1fr; gap:14px 16px; font-size:14px;">
+              <span class="mono" style="color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.14em;">{site.matchDay}</span>
+              <span><strong>Match day</strong> · {site.homeKickoff} home / {site.awayKickoff} away</span>
+              <span class="mono" style="color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.14em;">{site.trainingNight}</span>
+              <span><strong>Training</strong> · {site.trainingTime} · {site.homeGround.replace('Memorial Park', '')}</span>
+              <span class="mono" style="color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.14em;">Post-match</span>
+              <span>{site.postMatchVenue} · negotiable</span>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map placeholder -->
+  <section class="section" style="padding-top:48px;" data-screen-label="03 Ground">
+    <div class="container">
+      <header class="section__head">
+        <div>
+          <span class="section__eyebrow">Where to find us</span>
+          <h2 class="section__title">{site.homeGround}</h2>
+        </div>
+        <a class="section__more" href="https://maps.google.com/?q=Russell+Barker+Memorial+Park+Caloundra" target="_blank" rel="noopener">Open in Maps →</a>
+      </header>
+      <Placeholder
+        corner="[ MAP — DROP A STATIC MAP IMAGE OR EMBED HERE ]"
+        label="russell-barker-map.jpg · 2100×800"
+        variant="ph--wide"
+        style="aspect-ratio:21/8;"
+      />
+      <p class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:16px;">
+        {site.homeGround}, Caloundra QLD 4551 · {site.homePitch} (south-east corner) · Plenty of parking · One coffee van
+      </p>
+    </div>
+  </section>
+
+  {turnstileSiteKey && (
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  )}
+
+  <script>
+    const form = document.getElementById('contactForm') as HTMLFormElement | null;
+    const status = document.getElementById('formStatus') as HTMLElement | null;
+    const btn = document.getElementById('submitBtn') as HTMLButtonElement | null;
+
+    function setStatus(msg: string, kind: 'ok' | 'err' | 'info') {
+      if (!status) return;
+      status.style.display = 'block';
+      status.textContent = msg;
+      status.style.padding = '14px 16px';
+      status.style.fontSize = '14px';
+      status.style.borderLeft = `3px solid ${kind === 'ok' ? '#1f7a3a' : kind === 'err' ? 'var(--red)' : 'var(--hairline-strong)'}`;
+      status.style.background = kind === 'ok' ? 'rgba(31,122,58,0.08)' : kind === 'err' ? 'rgba(200,11,31,0.06)' : 'rgba(14,14,16,0.04)';
+      status.style.color = 'var(--ink)';
+    }
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form) return;
+
+      // Honeypot check — if filled, silently "succeed" without sending.
+      const honey = form.querySelector('input[name="botcheck"]') as HTMLInputElement | null;
+      if (honey?.checked) {
+        setStatus('Thanks — we\'ll be in touch shortly.', 'ok');
+        form.reset();
+        return;
+      }
+
+      const data = new FormData(form);
+
+      // If the access key is empty (e.g. local dev without .env), fail loud and clear.
+      const key = data.get('access_key');
+      if (!key) {
+        setStatus('Form is not configured: missing PUBLIC_WEB3FORMS_ACCESS_KEY. Email us at team@caloundraunited.com instead.', 'err');
+        return;
+      }
+
+      btn?.setAttribute('disabled', 'true');
+      btn && (btn.textContent = 'Sending…');
+      setStatus('Sending…', 'info');
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: data,
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && json.success) {
+          setStatus('Thanks — we\'ll be in touch shortly.', 'ok');
+          form.reset();
+        } else {
+          const msg = (json && json.message) ? json.message : 'Something went wrong. Please email us directly.';
+          setStatus(msg, 'err');
+        }
+      } catch (err) {
+        setStatus('Network error. Please try again, or email us directly.', 'err');
+      } finally {
+        btn?.removeAttribute('disabled');
+        btn && (btn.innerHTML = 'Send it <span class="arrow">→</span>');
+      }
+    });
+  </script>
+</BaseLayout>

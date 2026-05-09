@@ -1,0 +1,46 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Strip from '../components/Strip.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+type Props = {
+  title: string;
+  description?: string;
+  page?: 'home' | 'fixtures' | 'table' | 'squad' | 'news' | 'contact';
+  /** Hide the fixture strip (e.g. on individual news posts if desired) */
+  hideStrip?: boolean;
+};
+
+const { title, description, page, hideStrip = false } = Astro.props;
+const fullTitle = page === 'home'
+  ? `${site.team} O35 — Football, Friends, Friction-Free Knees`
+  : `${title} — ${site.team} O35`;
+const desc = description ?? `Caloundra United O35 — Sunshine Coast over-35s football. Fixtures, results, squad, news.`;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{fullTitle}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={desc} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={desc} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={`https://${site.domain}${Astro.url.pathname}`} />
+  <meta name="theme-color" content="#0E0E10" />
+  <link rel="icon" type="image/png" href="/assets/crest.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page={page ?? ''}>
+  <Nav active={page} />
+  {!hideStrip && <Strip />}
+  <slot />
+  <Footer />
+</body>
+</html>

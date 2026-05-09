@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { playersBy, avgAge, groupLabels, type Group } from '../data/squad';
+
+const sections: { group: Group; cols?: number }[] = [
+  { group: 'gk', cols: 2 },
+  { group: 'def' },
+  { group: 'mid' },
+  { group: 'fwd', cols: 3 },
+  { group: 'staff', cols: 2 },
+];
+---
+
+<BaseLayout title="Squad" page="squad">
+
+  <header class="pagehead" data-screen-label="01 Page header">
+    <div class="container">
+      <div class="pagehead__inner">
+        <div class="pagehead__eyebrow">Sixteen players · One physio · Zero illusions</div>
+        <h1 class="pagehead__title">The Squad</h1>
+        <p class="pagehead__lede">A combined age north of 600 years, a combined ACL count slightly south of 32. Below: who plays where, what they're called, and the one stat we'd put on a Topps card.</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section section--paper" data-screen-label="02 Position groups">
+    <div class="container">
+      {sections.map(({ group, cols }) => {
+        const players = playersBy(group);
+        if (players.length === 0) return null;
+        const meta = groupLabels[group];
+        const age = avgAge(players);
+        const gridStyle = cols
+          ? `grid-template-columns: repeat(${cols}, minmax(0,1fr)); margin-bottom:64px;`
+          : 'margin-bottom:64px;';
+        return (
+          <Fragment>
+            <header class="section__head" style="margin-bottom:24px;">
+              <div>
+                <span class="section__eyebrow">{meta.eyebrow}</span>
+                <h2 class="section__title" style="font-size:36px;">{meta.title}</h2>
+              </div>
+              {group !== 'staff' && (
+                <span class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);">{players.length} player{players.length === 1 ? '' : 's'}{age > 0 ? ` · Avg age ${age}` : ''}</span>
+              )}
+            </header>
+            <div class="squad-grid" style={gridStyle}>
+              {players.map((p) => (
+                <article class="player">
+                  <div class={`ph ph--portrait${group === 'staff' ? '' : ''}`} style={group === 'staff' ? 'aspect-ratio:16/10;' : undefined}>
+                    {p.num !== undefined && <span class="player__num">{p.num}</span>}
+                    <span class="player__pos">{p.position}</span>
+                    {p.imageLabel && <span class="ph__label">{p.imageLabel}</span>}
+                  </div>
+                  <div class="player__body">
+                    <div class="player__name">{p.name}</div>
+                    <div class="player__nick">{p.nick}</div>
+                    <div class="player__stat" set:html={p.stat} />
+                  </div>
+                </article>
+              ))}
+            </div>
+          </Fragment>
+        );
+      })}
+    </div>
+  </section>
+
+</BaseLayout>

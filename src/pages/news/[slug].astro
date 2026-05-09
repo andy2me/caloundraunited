@@ -1,0 +1,112 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Placeholder from '../../components/Placeholder.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const allPosts = (await getCollection('news'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const idx = allPosts.findIndex((p) => p.id === post.id);
+const newer = idx > 0 ? allPosts[idx - 1] : null;
+const older = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
+---
+
+<BaseLayout title={post.data.title} description={post.data.excerpt} page="news">
+
+  <header class="pagehead" data-screen-label="01 Post header">
+    <div class="container">
+      <div class="pagehead__inner">
+        <div class="pagehead__eyebrow">{post.data.category} · {fmt(post.data.date)} · {post.data.readTime}</div>
+        <h1 class="pagehead__title" style="font-size:clamp(36px,5vw,72px);">{post.data.title}</h1>
+        <p class="pagehead__lede">{post.data.excerpt}</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section section--paper" data-screen-label="02 Body">
+    <div class="container">
+      <div style="margin-bottom:32px;">
+        <Placeholder corner="[ HERO 16:9 ]" label={post.data.heroLabel} variant="ph--hero" />
+      </div>
+
+      <article class="post-body" style="max-width: 72ch; margin: 0 auto;">
+        <Content />
+        <p class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:48px; padding-top:24px; border-top:1px solid var(--hairline);">
+          Filed by {post.data.author} · {fmt(post.data.date)}
+        </p>
+      </article>
+
+      <nav style="display:flex; justify-content:space-between; align-items:stretch; gap:24px; margin-top:64px; padding-top:32px; border-top:1px solid var(--hairline);">
+        <div style="flex:1;">
+          {newer && (
+            <a href={`/news/${newer.id}`} style="color:inherit; text-decoration:none; display:block;">
+              <span class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);">← Newer</span>
+              <div style="font-family:var(--display); font-weight:700; font-size:20px; margin-top:6px; line-height:1.15;">{newer.data.title}</div>
+            </a>
+          )}
+        </div>
+        <div style="flex:1; text-align:right;">
+          {older && (
+            <a href={`/news/${older.id}`} style="color:inherit; text-decoration:none; display:block;">
+              <span class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);">Older →</span>
+              <div style="font-family:var(--display); font-weight:700; font-size:20px; margin-top:6px; line-height:1.15;">{older.data.title}</div>
+            </a>
+          )}
+        </div>
+      </nav>
+
+      <p style="text-align:center; margin-top:48px;">
+        <a class="btn btn--ghost-ink" href="/news">All news <span class="arrow">→</span></a>
+      </p>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .post-body :global(p) {
+    font-size: 17px;
+    line-height: 1.65;
+    margin: 0 0 1.2em;
+    max-width: none;
+  }
+  .post-body :global(h2) {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 28px;
+    text-transform: uppercase;
+    margin: 36px 0 16px;
+    line-height: 1.05;
+  }
+  .post-body :global(h3) {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    margin: 28px 0 12px;
+  }
+  .post-body :global(ul), .post-body :global(ol) {
+    margin: 0 0 1.2em;
+    padding-left: 24px;
+  }
+  .post-body :global(li) { margin-bottom: 6px; }
+  .post-body :global(strong) { font-weight: 700; }
+  .post-body :global(em) { font-style: italic; }
+  .post-body :global(a) {
+    color: inherit;
+    border-bottom: 2px solid var(--red);
+    padding-bottom: 1px;
+  }
+</style>

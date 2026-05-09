@@ -1,0 +1,52 @@
+---
+import { site } from '../data/site';
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="/assets/crest.png" class="brand__crest" alt="Caloundra City Soccer Club crest" />
+        <div>
+          <div class="brand__name" style="color:#fff;font-size:22px;">{site.team}</div>
+          <div class="brand__sub" style="margin-top:6px;">{site.sub}</div>
+        </div>
+        <p style="font-size:14px; color:rgba(255,255,255,0.6); max-width:38ch; margin-top:8px;">
+          A Sunshine Coast over-35s football team playing in the Churches Sunshine Coast league.
+          Founded by tired knees, sustained by post-match beers.
+        </p>
+      </div>
+      <div>
+        <div class="footer__head">Site</div>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/fixtures">Fixtures &amp; Results</a></li>
+          <li><a href="/squad">Squad</a></li>
+          <li><a href="/news">News</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__head">Match Day</div>
+        <ul>
+          <li><a href="#">{site.homeGround} (Home)</a></li>
+          <li><a href="#">{site.matchDay} · {site.homeKickoff} home / {site.awayKickoff} away</a></li>
+          <li><a href="#">Training · {site.trainingNight} {site.trainingTime}</a></li>
+          <li><a href="/table">League Table</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__head">Follow</div>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href="#">Instagram · {site.instagram}</a></li>
+          <li><a href="#">{site.whatsapp}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__btm">
+      <span>© {new Date().getFullYear()} Caloundra City Soccer Club</span>
+      <span>Built on bad backs · Powered by Voltaren</span>
+    </div>
+  </div>
+</footer>

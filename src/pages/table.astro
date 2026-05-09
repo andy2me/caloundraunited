@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ladder, ourPosition, barWidth, TOP4_CUTOFF } from '../data/ladder';
+import { stats } from '../data/fixtures';
+
+const pos = ourPosition();
+const ord = (n: number): string => {
+  if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`;
+  return `${n}${['th','st','nd','rd'][n % 10] ?? 'th'}`;
+};
+const ordSup = ord(pos).slice(-2);
+
+const us = ladder.find((r) => r.isUs);
+const usPoints = us?.points ?? 0;
+const topPts = ladder[0]?.points ?? 0;
+const usForm = us?.form ?? [];
+
+const inTop4 = pos > 0 && pos <= TOP4_CUTOFF;
+const fourthPts = ladder[TOP4_CUTOFF - 1]?.points ?? 0;
+const fifthPts = ladder[TOP4_CUTOFF]?.points ?? 0;
+const cushion = inTop4 ? usPoints - fifthPts : usPoints - fourthPts;
+const cushionLabel = inTop4
+  ? `Above ${ladder[TOP4_CUTOFF]?.club ?? '—'}`
+  : `Below ${ladder[TOP4_CUTOFF - 1]?.club ?? '—'}`;
+const ptsFromMaxPossible = stats.played * 3;
+
+const tierFor = (row: typeof ladder[number], position: number): 'us' | 'top' | 'mid' =>
+  row.isUs ? 'us' : position <= TOP4_CUTOFF ? 'top' : 'mid';
+
+// Quick wins-from-last-15 check
+const last5Won = usForm.filter((r) => r === 'W').length;
+const last5Drew = usForm.filter((r) => r === 'D').length;
+const last5Pts = last5Won * 3 + last5Drew;
+---
+
+<BaseLayout title="League Table" page="table">
+
+  <header class="pagehead" data-screen-label="01 Page header">
+    <div class="container">
+      <div class="pagehead__inner">
+        <div class="pagehead__eyebrow">2026 Season · Churches Sunshine Coast O35 Division · After Round {String(stats.played).padStart(2, '0')}</div>
+        <h1 class="pagehead__title">League Table</h1>
+        <p class="pagehead__lede">Ten teams, eighteen rounds, three points for a win, one for a draw, and zero excuses for the bottom four. Updated within 24 hours of full-time.</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- SNAPSHOT -->
+  <section class="section section--paper" style="padding-top:48px; padding-bottom:32px;" data-screen-label="02 Snapshot">
+    <div class="container">
+      <div class="ladder-snapshot">
+        <div class="ladder-snapshot__cell">
+          <div class="ladder-snapshot__label mono">Our position</div>
+          <div class="ladder-snapshot__big">{pos}<span class="sup">{ordSup}</span></div>
+          <div class="ladder-snapshot__sub mono">of {ladder.length}</div>
+        </div>
+        <div class="ladder-snapshot__cell">
+          <div class="ladder-snapshot__label mono">Points</div>
+          <div class="ladder-snapshot__big">{usPoints}</div>
+          <div class="ladder-snapshot__sub mono">From a possible {ptsFromMaxPossible}</div>
+        </div>
+        <div class="ladder-snapshot__cell">
+          <div class="ladder-snapshot__label mono">Gap to top</div>
+          <div class="ladder-snapshot__big" style="color:var(--red);">{usPoints - topPts === 0 ? '—' : usPoints - topPts}</div>
+          <div class="ladder-snapshot__sub mono">{ladder[0]?.club} {usPoints === topPts ? 'level' : 'lead'}</div>
+        </div>
+        <div class="ladder-snapshot__cell">
+          <div class="ladder-snapshot__label mono">Top-{TOP4_CUTOFF} cushion</div>
+          <div class="ladder-snapshot__big" style={`color:${cushion >= 0 ? '#1f7a3a' : 'var(--red)'};`}>{cushion >= 0 ? '+' : ''}{cushion}</div>
+          <div class="ladder-snapshot__sub mono">{cushionLabel}</div>
+        </div>
+        <div class="ladder-snapshot__cell">
+          <div class="ladder-snapshot__label mono">Form (last 5)</div>
+          <div class="form-pills" aria-label={`Recent form: ${usForm.join(', ')}`}>
+            {usForm.map((r) => <span class={`form-pill form-pill--${r.toLowerCase()}`}>{r}</span>)}
+          </div>
+          <div class="ladder-snapshot__sub mono">{last5Pts} of last 15 pts</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LADDER GRAPH -->
+  <section class="section section--paper" style="padding-top:24px;" data-screen-label="03 Ladder graph">
+    <div class="container">
+      <header class="section__head">
+        <div>
+          <span class="section__eyebrow">Points by club</span>
+          <h2 class="section__title">The Ladder, Plotted</h2>
+        </div>
+        <div class="ladder-legend mono">
+          <span><i class="dot dot--us"></i> Us</span>
+          <span><i class="dot dot--top"></i> Top {TOP4_CUTOFF} (finals)</span>
+          <span><i class="dot dot--mid"></i> Mid-table</span>
+        </div>
+      </header>
+
+      <div class="ladder-chart" role="figure" aria-label={`Points by club, after Round ${stats.played}`}>
+        <div class="ladder-chart__axis mono" aria-hidden="true">
+          <span>0</span><span>4</span><span>8</span><span>12</span><span>16</span><span>20</span>
+        </div>
+
+        {ladder.map((row, i) => {
+          const position = i + 1;
+          const tier = tierFor(row, position);
+          const w = barWidth(row.points);
+          return (
+            <Fragment>
+              <div class={`ladder-row ladder-row--${tier}`} data-pos={position} aria-current={row.isUs ? 'true' : undefined}>
+                <span class="ladder-row__pos">{position}</span>
+                <span class="ladder-row__crest">
+                  {row.isUs ? (
+                    <img src="/assets/crest.png" alt="" />
+                  ) : (
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <rect width="24" height="24" fill="#0E0E10"/>
+                      <circle cx="12" cy="12" r="7" fill={`oklch(0.55 0.14 ${row.hue})`}/>
+                      <text x="12" y="15" text-anchor="middle" font-family="Barlow Condensed" font-weight="800" font-size="9" fill="#fff">{row.short}</text>
+                    </svg>
+                  )}
+                </span>
+                <span class="ladder-row__club">
+                  {row.isUs ? <strong>{row.club}</strong> : row.club}
+                </span>
+                <div class="ladder-row__bar">
+                  <div class={`bar bar--${tier}`} style={`width: ${w}%;`}>
+                    <span class="bar__pts">{row.points}</span>
+                  </div>
+                </div>
+                <span class="ladder-row__form mono">
+                  {row.form.map((r) => <i class={`form-pip ${r}`}></i>)}
+                </span>
+              </div>
+              {position === TOP4_CUTOFF && (
+                <div class="ladder-divider mono"><span>Top {TOP4_CUTOFF} cut-off · finals series</span></div>
+              )}
+            </Fragment>
+          );
+        })}
+      </div>
+
+      <p class="mono ladder-foot">
+        Bar length proportional to points. Max possible points after R{stats.played} = {ptsFromMaxPossible}.
+      </p>
+    </div>
+  </section>
+
+  <!-- FULL TABLE -->
+  <section class="section section--paper" style="padding-top:48px;" data-screen-label="04 Full table">
+    <div class="container">
+      <header class="section__head">
+        <div>
+          <span class="section__eyebrow">Full standings</span>
+          <h2 class="section__title">By the Numbers</h2>
+        </div>
+        <span class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);">Sorted by Pts → GD → GF</span>
+      </header>
+
+      <table class="ladder-table">
+        <thead>
+          <tr>
+            <th class="col-pos">#</th>
+            <th class="col-club" colspan="2">Club</th>
+            <th>P</th>
+            <th>W</th>
+            <th>D</th>
+            <th>L</th>
+            <th>GF</th>
+            <th>GA</th>
+            <th>GD</th>
+            <th class="col-pts">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ladder.map((row, i) => {
+            const position = i + 1;
+            const gd = row.gf - row.ga;
+            const t = tierFor(row, position);
+            const rowClass = t === 'us' ? 'row-us' : t === 'top' ? 'row-top' : '';
+            return (
+              <Fragment>
+                <tr class={rowClass}>
+                  <td class="col-pos">{position}</td>
+                  <td class="col-crest">
+                    {row.isUs ? (
+                      <img src="/assets/crest.png" alt="" class="crest-img" />
+                    ) : (
+                      <span class="crest-dot" style={`background:oklch(0.55 0.14 ${row.hue});`}>{row.short}</span>
+                    )}
+                  </td>
+                  <td class="col-club">{row.isUs ? <strong>{row.club}</strong> : row.club}</td>
+                  <td>{row.played}</td>
+                  <td>{row.won}</td>
+                  <td>{row.drawn}</td>
+                  <td>{row.lost}</td>
+                  <td>{row.gf}</td>
+                  <td>{row.ga}</td>
+                  <td class={`gd ${gd >= 0 ? 'gd--pos' : 'gd--neg'}`}>{gd >= 0 ? `+${gd}` : `−${Math.abs(gd)}`}</td>
+                  <td class="col-pts">{row.points}</td>
+                </tr>
+                {position === TOP4_CUTOFF && (
+                  <tr class="row-divide"><td colspan="11">— top {TOP4_CUTOFF} cut-off —</td></tr>
+                )}
+              </Fragment>
+            );
+          })}
+        </tbody>
+      </table>
+
+      <p class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:24px;">
+        Source: Churches Sunshine Coast competition portal · Refreshed Mondays · Discrepancies? Email Andy.
+      </p>
+    </div>
+  </section>
+
+</BaseLayout>

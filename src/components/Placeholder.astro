@@ -1,0 +1,19 @@
+---
+type Props = {
+  /** e.g. "[ MATCH PHOTO 16:9 — DROP A HERO IMAGE HERE ]" */
+  corner?: string;
+  /** e.g. "teamphoto.jpg · 1920×1080" */
+  label?: string;
+  /** Extra classes, e.g. "ph--hero ph--dark" */
+  variant?: string;
+  style?: string;
+};
+
+const { corner, label, variant = '', style } = Astro.props;
+---
+
+<div class={`ph ${variant}`} style={style}>
+  {corner && <span class="ph__corner">{corner}</span>}
+  {label && <span class="ph__label">{label}</span>}
+  <slot />
+</div>
