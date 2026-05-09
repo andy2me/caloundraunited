@@ -15,7 +15,10 @@ const recentPosts = posts
   .filter((p) => p.id !== featurePost?.id)
   .slice(0, 4);
 
-const teaserPlayers = squad.filter((p) => ['Andy Twomey', 'Marko Pajic', 'Dave Thompson', 'Pete Hollings'].includes(p.name));
+const teaserNames = ['Andy Twomey', 'Jezz Morgan', 'Aaron Bullock', 'Jared Bullock'];
+const teaserPlayers = teaserNames
+  .map((n) => squad.find((p) => p.name === n && p.group !== 'staff'))
+  .filter((p): p is NonNullable<typeof p> => p !== undefined);
 
 const last = lastFixture();
 const heroEyebrow = last
