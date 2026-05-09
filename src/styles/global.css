@@ -410,6 +410,15 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
   aspect-ratio: 4/3;
 }
 .ph--portrait { aspect-ratio: 3/4; }
+.ph__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
 .ph--wide { aspect-ratio: 16/9; }
 .ph--square { aspect-ratio: 1/1; }
 .ph--hero {
