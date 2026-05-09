@@ -847,6 +847,109 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
 .no-mobile { display: block; }
 .only-mobile { display: none; }
 
+/* ---------- Contact: framed ground map ---------- */
+.ground-map {
+  position: relative;
+  display: block;
+  aspect-ratio: 21 / 8;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  overflow: hidden;
+  color: var(--ink);
+  text-decoration: none;
+  isolation: isolate;
+}
+.ground-map img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85) contrast(1.02);
+  transition: transform .35s ease, filter .25s ease;
+}
+.ground-map:hover img,
+.ground-map:focus-visible img {
+  transform: scale(1.015);
+  filter: saturate(1) contrast(1.05);
+}
+.ground-map:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+.ground-map__corner {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(245, 242, 236, 0.92);
+  border: 1px solid var(--hairline);
+  padding: 6px 10px;
+  z-index: 2;
+}
+.ground-map__chip {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--red);
+  padding: 14px 18px 14px 16px;
+  max-width: min(320px, calc(100% - 44px));
+  z-index: 2;
+}
+.ground-map__chip-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.ground-map__chip-name {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.ground-map__chip-meta {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ground-map__cta {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 8px 12px;
+  border: 1px solid var(--ink);
+  z-index: 2;
+  transition: background .15s ease;
+}
+.ground-map:hover .ground-map__cta { background: var(--red); border-color: var(--red); }
+@media (max-width: 720px) {
+  .ground-map { aspect-ratio: 4 / 3; }
+  .ground-map__chip { left: 12px; bottom: 12px; padding: 10px 12px; max-width: calc(100% - 24px); }
+  .ground-map__chip-name { font-size: 16px; }
+  .ground-map__corner { top: 10px; right: 10px; font-size: 9px; padding: 4px 8px; }
+  .ground-map__cta { right: 10px; bottom: 10px; padding: 6px 10px; font-size: 10px; }
+}
+
 /* ---------- Responsive helpers for grids that used to be inline-styled ---------- */
 .home-squad-teaser { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 24px; }
 .home-recruit-cta { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px; margin-top: 64px; padding: 36px 0 0; border-top: 1px solid rgba(255,255,255,0.18); }
@@ -1395,9 +1498,12 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
   .nav__links { display: none; }
   .nav__burger { display: inline-flex; }
   .nav__cta { display: none; }
+  /* Keep "O35 · Churches Sunshine Coast" on a single line on phones —
+     a touch smaller and tighter so it fits beside the burger. */
+  .brand__sub { white-space: nowrap; font-size: 10px; letter-spacing: 0.08em; }
   .strip__inner { grid-template-columns: 1fr; height: auto; }
-  .strip__cell { padding: 12px 8px; min-height: 56px; }
-  .strip__cell--mid { border-left: none; border-right: none; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+  .strip__cell { padding: 12px 0; min-height: 56px; }
+  .strip__cell--mid { border-left: none; border-right: none; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); justify-content: flex-start; }
   .strip .strip__cell--right { justify-content: flex-start; }
   .cards { grid-template-columns: 1fr; }
   .squad-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }

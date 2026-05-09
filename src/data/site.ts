@@ -11,7 +11,7 @@ export const site = {
   trainingTime: '7:00–8:30 PM',
   matchDay: 'Friday',
   kickoff: '6:30 / 8:15pm',
-  postMatchVenue: 'The Caloundra Hotel',
+  postMatchVenue: 'Jericho — Moffat Beach',
   instagram: '@caloundrautd35',
   whatsapp: 'WhatsApp Squad Chat',
   accent: '#C80B1F',

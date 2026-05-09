@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Placeholder from '../components/Placeholder.astro';
 import { site } from '../data/site';
 
 // Web3Forms public access key — exposed at build time (this is a public key, safe to expose).
@@ -136,12 +135,28 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         </div>
         <a class="section__more" href="https://maps.google.com/?q=Russell+Barker+Memorial+Park+Caloundra" target="_blank" rel="noopener">Open in Maps →</a>
       </header>
-      <Placeholder
-        corner="[ MAP — DROP A STATIC MAP IMAGE OR EMBED HERE ]"
-        label="russell-barker-map.jpg · 2100×800"
-        variant="ph--wide"
-        style="aspect-ratio:21/8;"
-      />
+      <a
+        class="ground-map"
+        href="https://maps.google.com/?q=Russell+Barker+Memorial+Park+Caloundra"
+        target="_blank"
+        rel="noopener"
+        aria-label={`${site.homeGround} on Google Maps`}
+      >
+        <img
+          src="/assets/contact-map.jpg"
+          alt={`Map showing ${site.homeGround} in Caloundra`}
+          loading="lazy"
+          width="2100"
+          height="800"
+        />
+        <span class="ground-map__corner mono" aria-hidden="true">26°48′S · 153°08′E · Caloundra QLD</span>
+        <span class="ground-map__chip">
+          <span class="ground-map__chip-eyebrow mono">Home ground</span>
+          <span class="ground-map__chip-name">{site.homeGround}</span>
+          <span class="ground-map__chip-meta mono">{site.homePitch} · south-east corner</span>
+        </span>
+        <span class="ground-map__cta mono" aria-hidden="true">Open in Maps <span aria-hidden="true">→</span></span>
+      </a>
       <p class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:16px;">
         {site.homeGround}, Caloundra QLD 4551 · {site.homePitch} (south-east corner) · Plenty of parking · One coffee van
       </p>
