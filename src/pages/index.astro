@@ -154,7 +154,7 @@ const lastDateLabel = last ? daysAgo(new Date(last.date)) : (featurePost ? daysA
         <a class="section__more" href="/squad">All players →</a>
       </header>
 
-      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+      <div class="home-squad-teaser">
         {teaserPlayers.map((p) => (
           <article class="player" style="background:transparent; border-color: rgba(255,255,255,0.18);">
             <div class="ph ph--dark">
@@ -174,7 +174,7 @@ const lastDateLabel = last ? daysAgo(new Date(last.date)) : (featurePost ? daysA
         ))}
       </div>
 
-      <div style="display:grid; grid-template-columns: 1fr auto; align-items:center; gap:32px; margin-top:64px; padding:36px 0 0; border-top:1px solid rgba(255,255,255,0.18);">
+      <div class="home-recruit-cta">
         <div>
           <h3 style="font-size:clamp(28px,3.2vw,40px); margin:0 0 8px;">Over 35? Quietly furious about it? <em style="color:var(--red); font-style:normal;">We're recruiting.</em></h3>
           <p style="color:rgba(255,255,255,0.7); margin:0; max-width:60ch;">No trials. No politics. Bring boots, shin pads, and a willingness to do the warm-up properly this time.</p>

@@ -145,6 +145,14 @@ const older = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
     border-bottom: 1px solid var(--hairline);
     vertical-align: top;
   }
+  /* On narrow viewports, shrink font + padding so multi-column tables
+     (Goals: time/scorer/assist/team/score) fit without horizontal scroll.
+     Cells are free to wrap. */
+  @media (max-width: 600px) {
+    .post-body :global(table) { font-size: 13px; }
+    .post-body :global(thead th) { padding: 8px 6px; font-size: 10px; letter-spacing: .1em; }
+    .post-body :global(tbody td) { padding: 8px 6px; }
+  }
   .post-body :global(hr) {
     border: 0;
     border-top: 1px solid var(--hairline);
