@@ -36,11 +36,10 @@ import { site } from '../data/site';
         </ul>
       </div>
       <div>
-        <div class="footer__head">Follow</div>
+        <div class="footer__head">Get in touch</div>
         <ul>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          <li><a href="#">Instagram · {site.instagram}</a></li>
-          <li><a href="#">{site.whatsapp}</a></li>
+          <li><a href={`tel:${site.coachPhone.replace(/\s+/g, '')}`}>Coach · {site.coachPhone}</a></li>
         </ul>
       </div>
     </div>
