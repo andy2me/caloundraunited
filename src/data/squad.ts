@@ -47,13 +47,13 @@ export const squad: Player[] = [
     stat: 'Means well in every challenge. Has <strong>twice</strong> apologised mid-tackle.' },
 
   // MID
-  { group: 'mid', num: 22, name: 'Brandon Sammut',     nick: '"The Engine"',         position: 'CDM',
+  { group: 'mid', num: 22, name: 'Brandan Sammut',     nick: '"The Engine"',         position: 'CDM · CO-CAPT', isCaptain: true,
     image: 'player-sammut.webp',
     stat: 'Box-to-box at <strong>twice</strong> the speed of anyone watching. Including the ref.' },
   { group: 'mid', num: 11, name: 'Mark Brackley',      nick: '"Brackers"',           position: 'CDM',
     image: 'player-brackley.webp',
     stat: 'Plays the half-spaces because the diagram <strong>told him to</strong>. Reads tactics PDFs in the carpark.' },
-  { group: 'mid', num: 8,  name: 'Andy Twomey',        nick: '"Tombstone"',          position: 'CDM · CAPT', isCaptain: true,
+  { group: 'mid', num: 8,  name: 'Andy Twomey',        nick: '"Tombstone"',          position: 'CDM · CO-CAPT', isCaptain: true,
     image: 'player-twomey.webp',
     stat: 'Buries oppositions where they stand. Six feet, <strong>studs-down</strong>, marked with the names of the strikers he\'s sent home early.' },
   { group: 'mid', num: 18, name: 'Baz Sowerby',        nick: '"Razzle Bazzle"',      position: 'RM',
