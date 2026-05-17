@@ -6,6 +6,7 @@ excerpt: "Aaron's first-half hat-trick, Brandan-Aaron carving the Magpies open a
 author: "Mingle Sport"
 readTime: "5 min read"
 heroLabel: "round03-eumundi.jpg"
+image: "/assets/news/round-03-eumundi-magpies.png"
 videoUrl: "https://www.youtube.com/embed/d9Np1LFhcc8?si=3GkXLCIPSQkhvwoa"
 ---
 
