@@ -372,9 +372,15 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
 }
 .hero__eyebrow .dot { width: 8px; height: 8px; background: var(--red); display: inline-block; }
 .hero__title {
-  font-size: clamp(56px, 9vw, 132px);
-  line-height: 0.9;
-  text-wrap: balance;
+  /* Sized to fit "Currimundi Cobias 6." (~19 chars) on a single line
+     within the hero__copy column at typical desktop widths. */
+  font-size: clamp(44px, 6.5vw, 96px);
+  line-height: 0.95;
+}
+/* Each logical line of the title sits on its own row and never wraps. */
+.hero__line {
+  display: block;
+  white-space: nowrap;
 }
 .hero__title em {
   font-style: normal;

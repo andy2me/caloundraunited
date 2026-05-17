@@ -8,6 +8,9 @@ readTime: "5 min read"
 heroLabel: "round05-currimundi.jpg"
 videoUrl: "https://www.youtube.com/embed/MBdK_Wu2xBc?si=0jIQf3WRmaL3hlsh"
 feature: true
+heroOpponent: "Currimundi"
+heroTagline: "Lessons banked."
+heroLede: "A wet night at Bli Bli, short on numbers, two coming back from injury. Aaron and Jared on the board, Brando stepping into goal injured for a triple save. Six points after five — top four holds. Buderim Power at home on the 22nd."
 ---
 
 ## Match Result

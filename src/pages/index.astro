@@ -62,15 +62,22 @@ const heroVideoSrc = ytId
   : undefined;
 const heroPoster = latestPost ? heroFor(latestPost) : MATCH_REPORT_HERO;
 
-// Manual per-match hero copy. Update when a new match report lands.
-const hero = {
-  titleLine1: 'Currimundi 6.',
-  titleLine2: 'Us 2.',
-  tagline: 'Lessons banked.',
-  lede:
-    'A wet night at Bli Bli, short on numbers, two coming back from injury. Aaron and Jared on the board, Brando stepping into goal injured for a triple save. Six points after five — top four holds. Buderim Power at home on the 22nd.',
-  reportHref: latestPost ? `/news/${latestPost.id}` : '/news',
-};
+// Hero copy is fully derived from the latest played fixture + the matching
+// news post's optional `heroOpponent` / `heroTagline` / `heroLede` fields.
+// Future rounds: just publish the report — no homepage edits needed.
+const hero = (() => {
+  if (!last) {
+    return { titleLine1: 'Caloundra United.', titleLine2: '', tagline: 'New season.', lede: '', reportHref: '/news' };
+  }
+  const opp = latestPost?.data.heroOpponent ?? last.opponent;
+  return {
+    titleLine1: `${opp} ${last.result.ga}.`,
+    titleLine2: `Us ${last.result.gf}.`,
+    tagline: latestPost?.data.heroTagline ?? '',
+    lede: latestPost?.data.heroLede ?? latestPost?.data.excerpt ?? '',
+    reportHref: latestPost ? `/news/${latestPost.id}` : '/news',
+  };
+})();
 ---
 
 <BaseLayout title="Home" page="home">
@@ -119,9 +126,9 @@ const hero = {
             <span>{lastDateLabel}</span>
           </div>
           <h1 class="hero__title">
-            {hero.titleLine1}<br/>
-            {hero.titleLine2}<br/>
-            <em>{hero.tagline}</em>
+            <span class="hero__line">{hero.titleLine1}</span>
+            <span class="hero__line">{hero.titleLine2}</span>
+            {hero.tagline && <em class="hero__line">{hero.tagline}</em>}
           </h1>
           <p class="hero__lede">{hero.lede}</p>
           <div class="hero__cta">
