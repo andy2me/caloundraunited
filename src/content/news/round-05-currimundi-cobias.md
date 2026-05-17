@@ -6,6 +6,7 @@ excerpt: "Short on numbers, two early returns from injury, Brando in goal after 
 author: "Daniel Hope"
 readTime: "5 min read"
 heroLabel: "round05-currimundi.jpg"
+image: "/assets/news/round-05-currimundi-cobias.png"
 videoUrl: "https://www.youtube.com/embed/MBdK_Wu2xBc?si=0jIQf3WRmaL3hlsh"
 feature: true
 heroOpponent: "Currimundi"

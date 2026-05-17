@@ -18,7 +18,16 @@ const logoFor = (clubName: string): string | undefined =>
 const lastResultClass = last ? (outcome(last) === 'W' ? 'win' : outcome(last) === 'L' ? 'loss' : 'draw') : '';
 const lastScoreLabel = last ? `${outcome(last)} ${last.result.gf}–${last.result.ga}` : '';
 
-const nextDateLabel = next ? `${formatFixtureDate(next).replace(' · BYE', '')} · ${next.venue.split(' · ')[0]} (${next.homeAway})` : 'TBC';
+// Two label variants so the sticky strip doesn't clip on narrow viewports.
+// Full: "Fri, 22 May · 8:15 PM · Maroochydore (Fishermans Road) (H)"
+// Short (≤720px): "Fri, 22 May · 8:15 PM · Maroochydore"   — drop the
+// venue parenthetical and the (H/A) suffix, both of which push the
+// chip past the strip cell on phones.
+const nextVenueFull = next?.venue.split(' · ')[0] ?? '';
+const nextVenueShort = nextVenueFull.replace(/\s*\(.*?\)\s*/g, ' ').trim();
+const nextDateBase = next ? formatFixtureDate(next).replace(' · BYE', '') : '';
+const nextDateLabel = next ? `${nextDateBase} · ${nextVenueFull} (${next.homeAway})` : 'TBC';
+const nextDateLabelShort = next ? `${nextDateBase} · ${nextVenueShort}` : 'TBC';
 ---
 
 <div class="strip" aria-label="Latest match info">
@@ -28,7 +37,8 @@ const nextDateLabel = next ? `${formatFixtureDate(next).replace(' · BYE', '')} 
         <span class="strip__label">Next ▸</span>
         <OppCrest hue={next.opponentHue} label={next.opponentShort || 'TBC'} logo={logoFor(next.opponent)} />
         <span class="strip__opp">v {next.opponent}</span>
-        <span class="strip__chip mono">{nextDateLabel}</span>
+        <span class="strip__chip mono no-mobile">{nextDateLabel}</span>
+        <span class="strip__chip mono only-mobile">{nextDateLabelShort}</span>
       </div>
     )}
     <div class="strip__cell strip__cell--mid">

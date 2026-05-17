@@ -70,7 +70,7 @@ const older = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
       <article class="post-body" style="max-width: 72ch; margin: 0 auto;">
         <Content />
         <p class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:48px; padding-top:24px; border-top:1px solid var(--hairline);">
-          Filed by {post.data.author} · {fmt(post.data.date)}
+          Filed by {post.data.author.replace(/^[Bb]y\s+/, '')} · {fmt(post.data.date)}
         </p>
       </article>
 

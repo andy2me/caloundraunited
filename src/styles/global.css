@@ -1548,8 +1548,18 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
      a touch smaller and tighter so it fits beside the burger. */
   .brand__sub { white-space: nowrap; font-size: 10px; letter-spacing: 0.08em; }
   .strip__inner { grid-template-columns: 1fr; height: auto; }
-  .strip__cell { padding: 12px 0; min-height: 56px; }
+  .strip__cell { padding: 12px 0; min-height: 56px; flex-wrap: wrap; row-gap: 4px; }
+  /* On mobile, drop the long date/venue chip to its own row under the
+     opponent name so the strip never clips. */
+  .strip__cell .strip__chip {
+    flex-basis: 100%;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
   .strip__cell--mid { border-left: none; border-right: none; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); justify-content: flex-start; }
+  /* Keep the compact League chip inline on its row. */
+  .strip__cell--mid .strip__chip { flex-basis: auto; }
   .strip .strip__cell--right { justify-content: flex-start; }
   .cards { grid-template-columns: 1fr; }
   .squad-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
