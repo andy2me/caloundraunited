@@ -16,6 +16,11 @@ const { Content } = await render(post);
 
 const fmt = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
 
+// Default hero image for match reports; per-post `image` frontmatter still wins.
+const MATCH_REPORT_HERO = '/assets/news/match-report.png';
+const heroImage = post.data.image
+  ?? (post.data.category === 'Match Report' ? MATCH_REPORT_HERO : undefined);
+
 const allPosts = (await getCollection('news'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const idx = allPosts.findIndex((p) => p.id === post.id);
@@ -51,7 +56,14 @@ const older = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
             ></iframe>
           </div>
         ) : (
-          <Placeholder corner="[ HERO 16:9 ]" label={post.data.heroLabel} variant="ph--wide" />
+          <Placeholder
+            corner="[ HERO 16:9 ]"
+            label={post.data.heroLabel}
+            variant="ph--wide"
+            image={heroImage}
+            alt={post.data.title}
+            objectPosition="center center"
+          />
         )}
       </div>
 

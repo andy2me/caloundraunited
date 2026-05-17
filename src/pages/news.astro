@@ -11,6 +11,11 @@ const restPosts = posts.filter((p) => p.id !== featurePost?.id);
 
 const fmt = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
 const fmtShort = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
+
+// Default hero image for match reports; per-post `image` frontmatter still wins.
+const MATCH_REPORT_HERO = '/assets/news/match-report.png';
+const heroFor = (p: typeof posts[number]) =>
+  p.data.image ?? (p.data.category === 'Match Report' ? MATCH_REPORT_HERO : undefined);
 ---
 
 <BaseLayout title="News" page="news">
@@ -38,7 +43,13 @@ const fmtShort = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', mo
 
       {featurePost && (
         <article class="feature" style="margin-bottom:48px;">
-          <Placeholder corner="[ FEATURE 16:10 ]" label={featurePost.data.heroLabel} />
+          <Placeholder
+            corner="[ FEATURE 16:10 ]"
+            label={featurePost.data.heroLabel}
+            image={heroFor(featurePost)}
+            alt={featurePost.data.title}
+            objectPosition="center center"
+          />
           <div class="feature__body">
             <div class="card__cat">{featurePost.data.category} · {fmt(featurePost.data.date)}</div>
             <h3 class="feature__title">{featurePost.data.title}</h3>
@@ -57,7 +68,13 @@ const fmtShort = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', mo
         {restPosts.map((p) => (
           <article class="card">
             <a href={`/news/${p.id}`} style="color:inherit; text-decoration:none; display:block;">
-              <Placeholder corner="[ 4:3 ]" label={p.data.heroLabel} />
+              <Placeholder
+                corner="[ 4:3 ]"
+                label={p.data.heroLabel}
+                image={heroFor(p)}
+                alt={p.data.title}
+                objectPosition="center center"
+              />
               <div class="card__body">
                 <div class="card__cat">{p.data.category} · {fmtShort(p.data.date)}</div>
                 <h3 class="card__title">{p.data.title}</h3>

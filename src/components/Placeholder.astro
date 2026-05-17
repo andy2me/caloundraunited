@@ -7,13 +7,42 @@ type Props = {
   /** Extra classes, e.g. "ph--hero ph--dark" */
   variant?: string;
   style?: string;
+  /** Optional real image src under /public, e.g. "/assets/news/match-report.png".
+   *  When provided, the striped placeholder is replaced by the image and the
+   *  caption/corner labels are hidden. */
+  image?: string;
+  /** Alt text for `image`. Defaults to "" so it's treated as decorative. */
+  alt?: string;
+  /** object-position override, e.g. "center center". Defaults to top. */
+  objectPosition?: string;
 };
 
-const { corner, label, variant = '', style } = Astro.props;
+const {
+  corner,
+  label,
+  variant = '',
+  style,
+  image,
+  alt = '',
+  objectPosition,
+} = Astro.props as Props;
 ---
 
-<div class={`ph ${variant}`} style={style}>
-  {corner && <span class="ph__corner">{corner}</span>}
-  {label && <span class="ph__label">{label}</span>}
+<div class={`ph ${variant} ${image ? 'ph--has-image' : ''}`.trim()} style={style}>
+  {image ? (
+    <img
+      class="ph__img"
+      src={image}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      style={objectPosition ? `object-position:${objectPosition};` : undefined}
+    />
+  ) : (
+    <>
+      {corner && <span class="ph__corner">{corner}</span>}
+      {label && <span class="ph__label">{label}</span>}
+    </>
+  )}
   <slot />
 </div>
