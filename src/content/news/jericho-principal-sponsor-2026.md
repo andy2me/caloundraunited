@@ -9,7 +9,7 @@ heroLabel: "jericho-sponsor.png"
 image: "/assets/news/jericho-sponsor.png"
 ---
 
-Caloundra United are delighted to announce [Jericho](https://www.instagram.com/jericho_moffat_beach/?utm_source=chatgpt.com) as the club's principal sponsor for the 2026 season — a partnership that feels less like a business arrangement and more like two local success stories sharing the same values.
+Caloundra United are delighted to announce [Jericho](https://www.instagram.com/jericho_moffat_beach/) as the club's principal sponsor for the 2026 season — a partnership that feels less like a business arrangement and more like two local success stories sharing the same values.
 
 Much like Caloundra United, Wes and the team at Jericho are building something special.
 

@@ -6,6 +6,7 @@ excerpt: "Two from Jared, two assists from Aaron, level at the break against the
 author: "Dan Hope"
 readTime: "5 min read"
 heroLabel: "round04-stella-swans.jpg"
+image: "/assets/news/round-04-stella-swans.png"
 videoUrl: "https://www.youtube.com/embed/CLFpLWLfpV8?si=2lYJqxPAViDeswlG"
 feature: false
 ---
