@@ -71,9 +71,9 @@ export const squad: Player[] = [
   { group: 'mid', num: 4,  name: 'Dan Hope',            nick: '"Hopey"',              position: 'RM',
     image: 'player-hope.webp',
     stat: 'Doubles as the coach. Won\'t tell you what he saw on the team-talk because he <strong>was the team-talk</strong>.' },
-  { group: 'mid', num: 12, name: 'Ben Williams',       nick: '"The Lens"',           position: 'LM',
+  { group: 'mid', num: 12, name: 'Ben Williams',       nick: '"The Jester"',         position: 'LM',
     image: 'player-williams.webp',
-    stat: 'Plays midfield, films highlights, edits the <strong>highlight reel</strong>. Owns the only working tripod.' },
+    stat: 'Smartass chippy with a one-liner for every situation, half of them <strong>actually funny</strong>. The other half land on Friday after a couple of beers anyway.' },
 
   // FWD
   { group: 'fwd', num: 9,  name: 'Aaron Bullock', nick: '"Big Bull"',  position: 'ST',
