@@ -13,7 +13,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 
 const fmtShort = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
 
 // Default hero image for match reports; per-post `image` frontmatter still wins.
-const MATCH_REPORT_HERO = '/assets/news/match-report.png';
+const MATCH_REPORT_HERO = '/assets/news/match-report.webp';
 const heroFor = (p: typeof posts[number]) =>
   p.data.image ?? (p.data.category === 'Match Report' ? MATCH_REPORT_HERO : undefined);
 ---

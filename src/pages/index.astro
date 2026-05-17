@@ -46,9 +46,31 @@ const daysAgo = (d: Date) => {
 const lastDateLabel = last ? daysAgo(new Date(last.date)) : (featurePost ? daysAgo(featurePost.data.date) : 'this season');
 
 // Default hero image for match reports; per-post `image` frontmatter still wins.
-const MATCH_REPORT_HERO = '/assets/news/match-report.png';
+const MATCH_REPORT_HERO = '/assets/news/match-report.webp';
 const heroFor = (p: typeof posts[number]) =>
   p.data.image ?? (p.data.category === 'Match Report' ? MATCH_REPORT_HERO : undefined);
+
+// --- Hero: dynamic latest-match data ----------------------------------------
+// Find the news post tied to the most-recent played fixture (if any) and
+// extract its YouTube embed ID so we can use the highlights reel as the
+// hero background. Falls back to the striped placeholder when no video is
+// available.
+const latestPost = last?.reportSlug ? posts.find((p) => p.id === last.reportSlug) : undefined;
+const ytId = latestPost?.data.videoUrl?.match(/\/embed\/([^?/]+)/)?.[1];
+const heroVideoSrc = ytId
+  ? `https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&disablekb=1`
+  : undefined;
+const heroPoster = latestPost ? heroFor(latestPost) : MATCH_REPORT_HERO;
+
+// Manual per-match hero copy. Update when a new match report lands.
+const hero = {
+  titleLine1: 'Currimundi 6.',
+  titleLine2: 'Us 2.',
+  tagline: 'Lessons banked.',
+  lede:
+    'A wet night at Bli Bli, short on numbers, two coming back from injury. Aaron and Jared on the board, Brando stepping into goal injured for a triple save. Six points after five — top four holds. Buderim Power at home on the 22nd.',
+  reportHref: latestPost ? `/news/${latestPost.id}` : '/news',
+};
 ---
 
 <BaseLayout title="Home" page="home">
@@ -56,11 +78,36 @@ const heroFor = (p: typeof posts[number]) =>
   <!-- HERO -->
   <section class="hero" data-screen-label="01 Hero">
     <div class="hero__media">
-      <Placeholder
-        variant="ph--hero ph--dark"
-        corner="[ MATCH PHOTO 16:9 — DROP A HERO IMAGE HERE ]"
-        label="teamphoto.jpg · 1920×1080"
-      />
+      {heroPoster && (
+        <img
+          class="hero__poster"
+          src={heroPoster}
+          alt=""
+          loading="eager"
+          decoding="async"
+        />
+      )}
+      {heroVideoSrc && (
+        <iframe
+          class="hero__video"
+          src={heroVideoSrc}
+          title="Match highlights"
+          loading="lazy"
+          frameborder="0"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          referrerpolicy="strict-origin-when-cross-origin"
+          aria-hidden="true"
+          tabindex="-1"
+        ></iframe>
+      )}
+      <div class="hero__scrim" aria-hidden="true"></div>
+      {!heroVideoSrc && !heroPoster && (
+        <Placeholder
+          variant="ph--hero ph--dark"
+          corner="[ MATCH PHOTO 16:9 — DROP A HERO IMAGE HERE ]"
+          label="teamphoto.jpg · 1920×1080"
+        />
+      )}
     </div>
     <div class="container">
       <div class="hero__inner">
@@ -72,15 +119,13 @@ const heroFor = (p: typeof posts[number]) =>
             <span>{lastDateLabel}</span>
           </div>
           <h1 class="hero__title">
-            Stella Swans 4.<br/>
-            Us 2.<br/>
-            <em>Level at the half.</em>
+            {hero.titleLine1}<br/>
+            {hero.titleLine2}<br/>
+            <em>{hero.tagline}</em>
           </h1>
-          <p class="hero__lede">
-            Two from Jared, two assists from Aaron, and a Caloundra side that went toe-to-toe with the league leaders at Kelman St for forty minutes before squad depth told. Fourth on six points after four rounds — Currimundi away on the 15th.
-          </p>
+          <p class="hero__lede">{hero.lede}</p>
           <div class="hero__cta">
-            <a class="btn btn--primary" href="/news/round-04-stella-swans">Read the report <span class="arrow">→</span></a>
+            <a class="btn btn--primary" href={hero.reportHref}>Read the report <span class="arrow">→</span></a>
             <a class="btn btn--ghost" href="/fixtures">Full fixtures</a>
           </div>
         </div>

@@ -17,7 +17,7 @@ const { Content } = await render(post);
 const fmt = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
 
 // Default hero image for match reports; per-post `image` frontmatter still wins.
-const MATCH_REPORT_HERO = '/assets/news/match-report.png';
+const MATCH_REPORT_HERO = '/assets/news/match-report.webp';
 const heroImage = post.data.image
   ?? (post.data.category === 'Match Report' ? MATCH_REPORT_HERO : undefined);
 

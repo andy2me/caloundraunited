@@ -6,6 +6,7 @@ excerpt: "Design landed in record time. The shipping, the away-kit colour, and t
 author: "By the bench"
 readTime: "3 min read"
 heroLabel: "o35-new-kits.jpg"
+image: "/assets/news/kit-2026.webp"
 ---
 
 You know how some projects start fast and finish faster? This wasn't one of them.

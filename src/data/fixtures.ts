@@ -90,7 +90,9 @@ export const fixtures: Fixture[] = [
     opponent: 'Currimundi Cobias',
     opponentShort: 'CC',
     opponentHue: 50,
-    venue: 'Parklakes · Field 2',
+    venue: 'Bli Bli FC',
+    result: { gf: 2, ga: 6 },
+    reportSlug: 'round-05-currimundi-cobias',
   },
   {
     date: '2026-05-22T20:15',
