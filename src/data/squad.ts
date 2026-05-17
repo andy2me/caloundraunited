@@ -24,12 +24,12 @@ export const squad: Player[] = [
   // GK
   { group: 'gk', num: 1, name: 'Steve Parker', nick: '"Spider"', position: 'GK',
     image: 'player-parker.webp',
-    stat: 'Six-foot-something of windmilling limbs. Yet to come for a cross he wasn\'t entitled to. <strong>Mostly</strong>.' },
+    stat: 'Nine fingers. <strong>Ten gloves.</strong> Yet to come for a cross he wasn\'t entitled to. The tenth digit is a story for the post-match.' },
 
   // DEF
-  { group: 'def', num: 2,  name: 'Jezz Morgan',     nick: '"The Mayor"',      position: 'RB',
+  { group: 'def', num: 2,  name: 'Jezz Morgan',     nick: '"Tinman"',         position: 'RB',
     image: 'player-morgan.webp',
-    stat: 'Knows everyone in Caloundra by name. Marks them <strong>by reputation</strong>, which is faster than turning.' },
+    stat: 'Walks out looking like he\'s been left in the garage too long. Five minutes in he\'s beaten his man, won the header, and is already <strong>shouting at the bench</strong>. The stiffness, it turns out, is cosmetic.' },
   { group: 'def', num: 6,  name: 'Jack Aviles',     nick: '"Jaws"',           position: 'CB',
     image: 'player-aviles.webp',
     stat: 'Bites at every tackle. Chews <strong>nothing</strong>. The two are not unrelated.' },
@@ -56,7 +56,7 @@ export const squad: Player[] = [
   { group: 'mid', num: 8,  name: 'Andy Twomey',        nick: '"Tombstone"',          position: 'CDM · CAPT', isCaptain: true,
     image: 'player-twomey.webp',
     stat: 'Buries oppositions where they stand. Six feet, <strong>studs-down</strong>, marked with the names of the strikers he\'s sent home early.' },
-  { group: 'mid', num: 18, name: 'Baz Sowerby',        nick: '"Bazza"',              position: 'RM',
+  { group: 'mid', num: 18, name: 'Baz Sowerby',        nick: '"Razzle Bazzle"',      position: 'RM',
     image: 'player-sowerby.webp',
     stat: 'Long-range shooter. Hits the target <strong>occasionally</strong>. Hits a parked car biennially.' },
   { group: 'mid', num: 14, name: 'CBas Van H',         nick: '"Duchess"',            position: 'LM',
