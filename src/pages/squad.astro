@@ -2,12 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { playersBy, avgAge, groupLabels, type Group } from '../data/squad';
 
-const sections: { group: Group; cols?: number }[] = [
-  { group: 'gk', cols: 2 },
+const sections: { group: Group }[] = [
+  { group: 'gk' },
   { group: 'def' },
   { group: 'mid' },
-  { group: 'fwd', cols: 2 },
-  { group: 'staff', cols: 2 },
+  { group: 'fwd' },
+  { group: 'staff' },
 ];
 ---
 
@@ -25,14 +25,12 @@ const sections: { group: Group; cols?: number }[] = [
 
   <section class="section section--paper" data-screen-label="02 Position groups">
     <div class="container">
-      {sections.map(({ group, cols }) => {
+      {sections.map(({ group }) => {
         const players = playersBy(group);
         if (players.length === 0) return null;
         const meta = groupLabels[group];
         const age = avgAge(players);
-        const gridStyle = cols
-          ? `grid-template-columns: repeat(${cols}, minmax(0,1fr)); margin-bottom:64px;`
-          : 'margin-bottom:64px;';
+        const gridStyle = 'margin-bottom:64px;';
         return (
           <Fragment>
             <header class="section__head" style="margin-bottom:24px;">
