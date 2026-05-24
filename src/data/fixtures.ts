@@ -103,6 +103,8 @@ export const fixtures: Fixture[] = [
     opponentShort: 'BP',
     opponentHue: 210,
     venue: 'Maroochydore (Fishermans Road) · Field 5',
+    result: { gf: 3, ga: 5 },
+    reportSlug: 'round-06-buderim-power',
   },
   {
     date: '2026-05-29T20:15',
