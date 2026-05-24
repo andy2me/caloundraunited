@@ -360,9 +360,10 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
 }
 .hero__copy { max-width: 720px; }
 .hero__eyebrow {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: 6px 12px;
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.16em;
@@ -370,7 +371,8 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
   color: var(--paper);
   margin-bottom: 22px;
 }
-.hero__eyebrow .dot { width: 8px; height: 8px; background: var(--red); display: inline-block; }
+.hero__eyebrow .dot { width: 8px; height: 8px; background: var(--red); display: inline-block; flex: none; }
+.hero__eyebrow-date { display: inline-flex; align-items: center; gap: 12px; }
 .hero__title {
   /* Sized to fit "Currimundi Cobias 6." (~19 chars) on a single line
      within the hero__copy column at typical desktop widths. */
