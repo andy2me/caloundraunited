@@ -122,8 +122,10 @@ const hero = (() => {
           <div class="hero__eyebrow">
             <span class="dot"></span>
             <span>{heroEyebrow}</span>
-            <span style="opacity:.5;">·</span>
-            <span>{lastDateLabel}</span>
+            <span class="hero__eyebrow-date">
+              <span style="opacity:.5;" aria-hidden="true">·</span>
+              <span>{lastDateLabel}</span>
+            </span>
           </div>
           <h1 class="hero__title">
             <span class="hero__line">{hero.titleLine1}</span>
