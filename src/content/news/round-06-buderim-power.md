@@ -6,7 +6,7 @@ excerpt: "Jared's first-half hat-trick had United 3-1 up at the break, but Buder
 author: "Dan Hope"
 readTime: "5 min read"
 heroLabel: "round06-buderim.jpg"
-image: "/assets/news/round-06-buderim-power.jpeg"
+image: "/assets/news/round-06-buderim-power.webp"
 videoUrl: "https://www.youtube.com/embed/Rwc-Fr1lGMA"
 feature: true
 heroOpponent: "Buderim"
