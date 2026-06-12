@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Placeholder from '../components/Placeholder.astro';
+import MatchReportHero from '../components/MatchReportHero.astro';
 import { stats, formLast5, lastFixture, outcome } from '../data/fixtures';
 import { squad, teamAverageAge } from '../data/squad';
 import { sponsors } from '../data/sponsors';
@@ -45,10 +46,13 @@ const daysAgo = (d: Date) => {
 
 const lastDateLabel = last ? daysAgo(new Date(last.date)) : (featurePost ? daysAgo(featurePost.data.date) : 'this season');
 
-// Default hero image for match reports; per-post `image` frontmatter still wins.
-const MATCH_REPORT_HERO = '/assets/news/match-report.webp';
-const heroFor = (p: typeof posts[number]) =>
-  p.data.image ?? (p.data.category === 'Match Report' ? MATCH_REPORT_HERO : undefined);
+// True when a post should use the dynamic match-report graphic.
+// Explicit `image` frontmatter still wins.
+const useMatchHero = (p: typeof posts[number]) =>
+  !p.data.image && p.data.category === 'Match Report';
+// Static poster used behind the homepage hero video. The video iframe
+// covers it once it starts playing, so it stays as the bundled image.
+const MATCH_REPORT_POSTER = '/assets/news/match-report.webp';
 
 // --- Hero: dynamic latest-match data ----------------------------------------
 // Find the news post tied to the most-recent played fixture (if any) and
@@ -60,7 +64,7 @@ const ytId = latestPost?.data.videoUrl?.match(/\/embed\/([^?/]+)/)?.[1];
 const heroVideoSrc = ytId
   ? `https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&disablekb=1`
   : undefined;
-const heroPoster = latestPost ? heroFor(latestPost) : MATCH_REPORT_HERO;
+const heroPoster = latestPost?.data.image ?? MATCH_REPORT_POSTER;
 
 // Hero copy is fully derived from the latest played fixture + the matching
 // news post's optional `heroOpponent` / `heroTagline` / `heroLede` fields.
@@ -169,13 +173,17 @@ const hero = (() => {
 
       {featurePost && (
         <article class="feature">
-          <Placeholder
-            corner="[ FEATURE 16:10 ]"
-            label={featurePost.data.heroLabel}
-            image={heroFor(featurePost)}
-            alt={featurePost.data.title}
-            objectPosition="center center"
-          />
+          {useMatchHero(featurePost) ? (
+            <MatchReportHero reportSlug={featurePost.id} variant="feature" />
+          ) : (
+            <Placeholder
+              corner="[ FEATURE 16:10 ]"
+              label={featurePost.data.heroLabel}
+              image={featurePost.data.image}
+              alt={featurePost.data.title}
+              objectPosition="center center"
+            />
+          )}
           <div class="feature__body">
             <div class="card__cat">{featurePost.data.category} · {formatPostDate(featurePost.data.date)}</div>
             <h3 class="feature__title">{featurePost.data.title}</h3>
@@ -194,13 +202,17 @@ const hero = (() => {
         {recentPosts.map((p) => (
           <article class="card">
             <a href={`/news/${p.id}`} style="color:inherit; text-decoration:none; display:block;">
-              <Placeholder
-                corner="[ 4:3 ]"
-                label={p.data.heroLabel}
-                image={heroFor(p)}
-                alt={p.data.title}
-                objectPosition="center center"
-              />
+              {useMatchHero(p) ? (
+                <MatchReportHero reportSlug={p.id} variant="card" />
+              ) : (
+                <Placeholder
+                  corner="[ 4:3 ]"
+                  label={p.data.heroLabel}
+                  image={p.data.image}
+                  alt={p.data.title}
+                  objectPosition="center center"
+                />
+              )}
               <div class="card__body">
                 <div class="card__cat">{p.data.category} · {p.data.date.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</div>
                 <h3 class="card__title">{p.data.title}</h3>

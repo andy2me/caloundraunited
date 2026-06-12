@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Placeholder from '../../components/Placeholder.astro';
+import MatchReportHero from '../../components/MatchReportHero.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('news');
@@ -16,10 +17,13 @@ const { Content } = await render(post);
 
 const fmt = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
 
-// Default hero image for match reports; per-post `image` frontmatter still wins.
-const MATCH_REPORT_HERO = '/assets/news/match-report.webp';
-const heroImage = post.data.image
-  ?? (post.data.category === 'Match Report' ? MATCH_REPORT_HERO : undefined);
+// Hero rendering rules (highest priority first):
+//   1. post.data.videoUrl  -> YouTube embed (handled in the template).
+//   2. post.data.image     -> explicit per-post image via <Placeholder>.
+//   3. category Match Report w/ no override -> dynamic <MatchReportHero>.
+//   4. fallback            -> striped <Placeholder>.
+const isMatchReport = post.data.category === 'Match Report';
+const useDynamicMatchHero = !post.data.image && isMatchReport;
 
 const allPosts = (await getCollection('news'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -55,12 +59,14 @@ const older = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
               allowfullscreen
             ></iframe>
           </div>
+        ) : useDynamicMatchHero ? (
+          <MatchReportHero reportSlug={post.id} variant="hero" />
         ) : (
           <Placeholder
             corner="[ HERO 16:9 ]"
             label={post.data.heroLabel}
             variant="ph--wide"
-            image={heroImage}
+            image={post.data.image}
             alt={post.data.title}
             objectPosition="center center"
           />

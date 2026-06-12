@@ -1,0 +1,203 @@
+---
+/**
+ * Standardised match-report graphic — used as the default hero / card
+ * image for any post in the "Match Report" category that does not set
+ * its own `image` or `videoUrl` in frontmatter.
+ *
+ * Looks up the matching fixture by `reportSlug` (or accepts an explicit
+ * opponent override), then renders both clubs' crests side-by-side on a
+ * dark splatter background with a "Match Report" lockup bottom-left.
+ *
+ * Variants control the aspect ratio so the same component slots into
+ * the post hero (16:9), the news-index feature (16:10), and small
+ * cards (4:3) without changing the layout primitives elsewhere.
+ */
+import { fixtures } from '../data/fixtures';
+import { ladder } from '../data/ladder';
+
+type Variant = 'hero' | 'feature' | 'card';
+
+type Props = {
+  /** News post id (slug). Used to find the matching fixture. */
+  reportSlug?: string;
+  /** Override the opponent name if no fixture is available. */
+  opponent?: string;
+  /** Aspect-ratio variant. */
+  variant?: Variant;
+  /** Override label text. Defaults to "Match Report". */
+  label?: string;
+  /** Optional inline class hook (e.g. ph--wide for the post hero). */
+  className?: string;
+};
+
+const {
+  reportSlug,
+  opponent: opponentProp,
+  variant = 'hero',
+  label = 'Match Report',
+  className = '',
+} = Astro.props as Props;
+
+const fixture = reportSlug
+  ? fixtures.find((f) => f.reportSlug === reportSlug)
+  : undefined;
+const opponent = opponentProp ?? fixture?.opponent;
+
+// Re-use the ladder's club -> logo mapping so this stays a single
+// source of truth — adding a new opponent's crest in ladder.ts is
+// enough to give the match-report graphic an updated lockup.
+const oppLogo = opponent
+  ? ladder.find((r) => r.club === opponent)?.logo
+  : undefined;
+
+const round = fixture?.comp.replace('League · ', '');
+const date = fixture ? new Date(fixture.date) : undefined;
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+
+const eyebrow = [round, date ? fmtDate(date) : null].filter(Boolean).join(' · ');
+const ariaLabel = opponent
+  ? `Match report graphic: Caloundra United v ${opponent}`
+  : 'Match report graphic';
+---
+
+<div
+  class={`mr-hero mr-hero--${variant} ${className}`.trim()}
+  role="img"
+  aria-label={ariaLabel}
+>
+  <div class="mr-hero__bg" aria-hidden="true"></div>
+  <div class="mr-hero__streak" aria-hidden="true"></div>
+
+  <div class="mr-hero__crests">
+    <img
+      class="mr-hero__crest"
+      src="/assets/crest.png"
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+    <span class="mr-hero__vs" aria-hidden="true">v</span>
+    {oppLogo ? (
+      <img
+        class="mr-hero__crest"
+        src={oppLogo}
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <span class="mr-hero__crest mr-hero__crest--missing" aria-hidden="true">
+        {opponent ? opponent.split(' ').map((w) => w[0]).join('').slice(0, 3) : '?'}
+      </span>
+    )}
+  </div>
+
+  <div class="mr-hero__label">
+    {eyebrow && <div class="mr-hero__eyebrow">{eyebrow}</div>}
+    <div class="mr-hero__title">{label}</div>
+    {opponent && <div class="mr-hero__sub">v {opponent}</div>}
+  </div>
+</div>
+
+<style>
+  .mr-hero {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    isolation: isolate;
+    /* Pure black so the Caloundra crest's baked-in black panel merges
+       seamlessly into the background. */
+    background: #000;
+    color: #f5f2ec;
+    container-type: inline-size;
+  }
+  .mr-hero--hero    { aspect-ratio: 16 / 9; }
+  .mr-hero--feature { aspect-ratio: 16 / 10; }
+  .mr-hero--card    { aspect-ratio: 4 / 3; }
+
+  /* Background + streak intentionally empty — kept in the markup so we
+     can re-introduce a treatment later without re-wiring the layers. */
+  .mr-hero__bg,
+  .mr-hero__streak { display: none; }
+
+  /* Crests sit dead-centre in a horizontal lockup. */
+  .mr-hero__crests {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(16px, 6cqi, 72px);
+  }
+  .mr-hero__crest {
+    /* Sized to dominate the frame — crests are the focal point. */
+    width: clamp(80px, 32cqi, 320px);
+    height: auto;
+    /* No aspect-ratio: the crests aren't perfectly square; letting them
+       render at their native ratio avoids letterbox showing through. */
+    object-fit: contain;
+  }
+  .mr-hero__crest--missing {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(20px, 6cqi, 60px);
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.18);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .mr-hero__vs {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(22px, 7cqi, 80px);
+    line-height: 1;
+    text-transform: lowercase;
+    color: var(--paper, #f5f2ec);
+    opacity: 0.92;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.6);
+  }
+
+  /* "MATCH REPORT" lockup bottom-left. */
+  .mr-hero__label {
+    position: absolute;
+    z-index: 2;
+    left: clamp(14px, 4cqi, 40px);
+    bottom: clamp(14px, 4cqi, 36px);
+    max-width: 70%;
+  }
+  .mr-hero__eyebrow {
+    font-family: var(--mono);
+    font-size: clamp(9px, 1.6cqi, 13px);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 6px;
+  }
+  .mr-hero__title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(20px, 7cqi, 72px);
+    line-height: 0.92;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    /* Red underline echo of the eyebrow accent used elsewhere. */
+    border-bottom: 0.3cqi solid var(--red, #C80B1F);
+    padding-bottom: 0.6cqi;
+    display: inline-block;
+  }
+  .mr-hero__sub {
+    margin-top: 8px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(11px, 2.4cqi, 22px);
+    letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.78);
+    text-transform: uppercase;
+  }
+</style>

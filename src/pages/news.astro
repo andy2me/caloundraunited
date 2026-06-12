@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Placeholder from '../components/Placeholder.astro';
+import MatchReportHero from '../components/MatchReportHero.astro';
 
 const posts = (await getCollection('news'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -12,10 +13,10 @@ const restPosts = posts.filter((p) => p.id !== featurePost?.id);
 const fmt = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
 const fmtShort = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
 
-// Default hero image for match reports; per-post `image` frontmatter still wins.
-const MATCH_REPORT_HERO = '/assets/news/match-report.webp';
-const heroFor = (p: typeof posts[number]) =>
-  p.data.image ?? (p.data.category === 'Match Report' ? MATCH_REPORT_HERO : undefined);
+// True when a post should use the dynamic match-report graphic.
+// Explicit `image` frontmatter still wins.
+const useMatchHero = (p: typeof posts[number]) =>
+  !p.data.image && p.data.category === 'Match Report';
 ---
 
 <BaseLayout title="News" page="news">
@@ -43,13 +44,17 @@ const heroFor = (p: typeof posts[number]) =>
 
       {featurePost && (
         <article class="feature" style="margin-bottom:48px;">
-          <Placeholder
-            corner="[ FEATURE 16:10 ]"
-            label={featurePost.data.heroLabel}
-            image={heroFor(featurePost)}
-            alt={featurePost.data.title}
-            objectPosition="center center"
-          />
+          {useMatchHero(featurePost) ? (
+            <MatchReportHero reportSlug={featurePost.id} variant="feature" />
+          ) : (
+            <Placeholder
+              corner="[ FEATURE 16:10 ]"
+              label={featurePost.data.heroLabel}
+              image={featurePost.data.image}
+              alt={featurePost.data.title}
+              objectPosition="center center"
+            />
+          )}
           <div class="feature__body">
             <div class="card__cat">{featurePost.data.category} · {fmt(featurePost.data.date)}</div>
             <h3 class="feature__title">{featurePost.data.title}</h3>
@@ -68,13 +73,17 @@ const heroFor = (p: typeof posts[number]) =>
         {restPosts.map((p) => (
           <article class="card">
             <a href={`/news/${p.id}`} style="color:inherit; text-decoration:none; display:block;">
-              <Placeholder
-                corner="[ 4:3 ]"
-                label={p.data.heroLabel}
-                image={heroFor(p)}
-                alt={p.data.title}
-                objectPosition="center center"
-              />
+              {useMatchHero(p) ? (
+                <MatchReportHero reportSlug={p.id} variant="card" />
+              ) : (
+                <Placeholder
+                  corner="[ 4:3 ]"
+                  label={p.data.heroLabel}
+                  image={p.data.image}
+                  alt={p.data.title}
+                  objectPosition="center center"
+                />
+              )}
               <div class="card__body">
                 <div class="card__cat">{p.data.category} · {fmtShort(p.data.date)}</div>
                 <h3 class="card__title">{p.data.title}</h3>
