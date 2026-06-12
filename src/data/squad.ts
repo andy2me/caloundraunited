@@ -45,6 +45,9 @@ export const squad: Player[] = [
   { group: 'def', num: 19, name: 'Paul Amici',      nick: '"Friendly Fire"',  position: 'CB',
     image: 'player-amici.webp',
     stat: 'Means well in every challenge. Has <strong>twice</strong> apologised mid-tackle.' },
+  { group: 'def', num: 3,  name: 'Matt Murray',      nick: '"Muzza"',          position: 'LB',
+    image: 'player-murray.webp',
+    stat: 'Another <strong>smartass chippy</strong> on the books — two now, one chant book between them. Quotes you for a deck, then hangs a left-foot ball on a sixpence and quotes you again for the fence. Cultured wand wrapped in <strong>sawdust</strong>.' },
 
   // MID
   { group: 'mid', num: 22, name: 'Brandan Sammut',     nick: '"The Engine"',         position: 'CDM · CO-CAPT', isCaptain: true,
