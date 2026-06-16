@@ -33,14 +33,14 @@ export const ladder: LadderRow[] = [
   { club: 'Stella Swans',       short: 'SS', hue: 220, logo: '/assets/clubs/stella-swans.png',   played: 8, won: 6, drawn: 1, lost: 1, gf: 41, ga: 16, points: 19, form: ['W','W','W','L','W'] },
   { club: 'Currimundi Cobias',  short: 'CC', hue: 50,  logo: '/assets/clubs/currimundi.png',     played: 8, won: 5, drawn: 1, lost: 2, gf: 37, ga: 12, points: 16, form: ['W','D','W','W','L'] },
   { club: 'Buderim Power',      short: 'BP', hue: 210, logo: '/assets/clubs/buderim.png',        played: 8, won: 3, drawn: 3, lost: 2, gf: 19, ga: 23, points: 12, form: ['D','D','W','W','D'] },
-  { club: 'Coolum Hammers',     short: 'CH', hue: 30,  logo: '/assets/clubs/coolum-hammers.png', played: 9, won: 3, drawn: 1, lost: 5, gf: 17, ga: 30, points: 10, form: ['W','L','L','L','D'] },
-  { club: 'Caloundra United',   short: 'CU', hue: 0,                                              played: 8, won: 3, drawn: 0, lost: 5, gf: 26, ga: 27, points: 9,  form: ['L','L','L','L','W'], isUs: true },
-  { club: 'Unity Strikers',     short: 'US', hue: 240, logo: '/assets/clubs/unity-strikers.png', played: 8, won: 2, drawn: 2, lost: 4, gf: 18, ga: 31, points: 8,  form: ['L','D','W','L','D'] },
-  { club: 'Eumundi Platinum',   short: 'EP', hue: 0,   logo: '/assets/clubs/eumundi.png',        played: 9, won: 0, drawn: 1, lost: 8, gf: 8,  ga: 54, points: 1,  form: ['L','L','L','L','D'] },
+  { club: 'Unity Strikers',     short: 'US', hue: 240, logo: '/assets/clubs/unity-strikers.png', played: 9, won: 3, drawn: 2, lost: 4, gf: 21, ga: 33, points: 11, form: ['D','W','L','D','W'] },
+  { club: 'Coolum Hammers',     short: 'CH', hue: 30,  logo: '/assets/clubs/coolum-hammers.png', played: 9, won: 3, drawn: 1, lost: 5, gf: 24, ga: 30, points: 10, form: ['L','L','L','D','W'] },
+  { club: 'Caloundra United',   short: 'CU', hue: 0,                                              played: 9, won: 3, drawn: 0, lost: 6, gf: 28, ga: 30, points: 9,  form: ['L','L','L','W','L'], isUs: true },
+  { club: 'Eumundi Platinum',   short: 'EP', hue: 0,   logo: '/assets/clubs/eumundi.png',        played: 9, won: 0, drawn: 1, lost: 8, gf: 8,  ga: 61, points: 1,  form: ['L','L','L','D','L'] },
 ];
 
 export const TOP4_CUTOFF = 4;
-export const ROUND = 11;
+export const ROUND = 12;
 
 /** Position of our team. */
 export const ourPosition = (): number => {

@@ -8,7 +8,7 @@ readTime: "5 min read"
 heroLabel: "round08-coolum.jpg"
 image: "/assets/news/round-10-coolum-hammers.png"
 videoUrl: "https://www.youtube.com/embed/4OrxI3JY9Gs?si=FtZ0ZqO4PQz3U9p6"
-feature: true
+feature: false
 heroOpponent: "Coolum"
 heroTagline: "Response delivered."
 heroLede: "Four straight defeats. One brutal week. A 7-1 statement. Jared two-and-four, Aaron a brace, Christian immense for ninety minutes. Finals hopes very much alive — three to play, top four within reach."

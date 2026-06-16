@@ -139,6 +139,8 @@ export const fixtures: Fixture[] = [
     opponentShort: 'US',
     opponentHue: 240,
     venue: 'Parklakes · Field 1',
+    result: { gf: 2, ga: 3 },
+    reportSlug: 'round-09-unity-strikers',
   },
   {
     date: '2026-06-19T18:30',
