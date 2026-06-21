@@ -151,6 +151,8 @@ export const fixtures: Fixture[] = [
     opponentShort: 'EP',
     opponentHue: 0,
     venue: 'Multi-sport Complex 2 · Field 2',
+    result: { gf: 3, ga: 1 },
+    reportSlug: 'round-10-eumundi-magpies',
   },
   {
     date: '2026-07-10T18:30',
