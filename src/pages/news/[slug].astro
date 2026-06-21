@@ -171,6 +171,13 @@ const older = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
     .post-body :global(thead th) { padding: 8px 6px; font-size: 10px; letter-spacing: .1em; }
     .post-body :global(tbody td) { padding: 8px 6px; }
   }
+  .post-body :global(img) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 32px auto;
+    border: 1px solid var(--hairline);
+  }
   .post-body :global(hr) {
     border: 0;
     border-top: 1px solid var(--hairline);

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0E0E10"/>
+      <stop offset="100%" stop-color="#1A1A1F"/>
+    </linearGradient>
+    <pattern id="dots3" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.6" fill="#2A2A2F"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#bg3)"/>
+  <rect width="1200" height="600" fill="url(#dots3)" opacity="0.4"/>
+
+  <rect x="60" y="50" width="1080" height="2" fill="#E63946"/>
+  <text x="60" y="90" font-family="Inter, sans-serif" font-size="13" letter-spacing="3" font-weight="600" fill="#888">THE SIX-POINTER · ROUND 16 · FRIDAY 24 JULY</text>
+
+  <text x="60" y="160" font-family="Georgia, serif" font-size="46" font-weight="700" fill="#fff">Caloundra vs Buderim.</text>
+  <text x="60" y="205" font-family="Georgia, serif" font-size="46" font-style="italic" fill="#E63946">This is the season.</text>
+
+  <!-- Comparison block -->
+  <g transform="translate(0, 280)">
+    <!-- Caloundra side -->
+    <g>
+      <text x="60" y="0" font-family="Inter, sans-serif" font-size="11" letter-spacing="3" font-weight="700" fill="#E63946">CALOUNDRA · 4TH</text>
+      <text x="60" y="60" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#fff">12</text>
+      <text x="180" y="60" font-family="Inter, sans-serif" font-size="14" fill="#888">pts</text>
+      <text x="60" y="100" font-family="Inter, sans-serif" font-size="14" fill="#aaa">10 played · 4 to play</text>
+      <text x="60" y="125" font-family="Inter, sans-serif" font-size="14" fill="#aaa">GD +0 · ceiling 24 pts</text>
+      <text x="60" y="170" font-family="Inter, sans-serif" font-size="13" fill="#666" letter-spacing="1">Form (last 5): L L W L W</text>
+    </g>
+
+    <!-- VS divider -->
+    <text x="600" y="60" text-anchor="middle" font-family="Georgia, serif" font-size="56" font-style="italic" fill="#333">vs</text>
+
+    <!-- Buderim side -->
+    <g>
+      <text x="1140" y="0" text-anchor="end" font-family="Inter, sans-serif" font-size="11" letter-spacing="3" font-weight="700" fill="#888">BUDERIM POWER · 5TH</text>
+      <text x="1140" y="60" text-anchor="end" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#fff">12</text>
+      <text x="1020" y="60" text-anchor="end" font-family="Inter, sans-serif" font-size="14" fill="#888">pts</text>
+      <text x="1140" y="100" text-anchor="end" font-family="Inter, sans-serif" font-size="14" fill="#aaa">8 played · 6 to play</text>
+      <text x="1140" y="125" text-anchor="end" font-family="Inter, sans-serif" font-size="14" fill="#aaa">GD −4 · ceiling 30 pts</text>
+      <text x="1140" y="170" text-anchor="end" font-family="Inter, sans-serif" font-size="13" fill="#666" letter-spacing="1">Previous meeting: lost 3–5</text>
+    </g>
+  </g>
+
+  <line x1="60" y1="500" x2="1140" y2="500" stroke="#333"/>
+  <text x="60" y="540" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#aaa">Win it: +3 to us, 0 to them. Six-point swing. Goal difference protected.</text>
+  <text x="60" y="565" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#666">Lose it: top four needs a result off Stella or Currimundi. Steeper road.</text>
+</svg>
