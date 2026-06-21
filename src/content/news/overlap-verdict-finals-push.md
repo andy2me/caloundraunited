@@ -79,7 +79,7 @@ image: "/assets/news/overlap-verdict.png"
 
 **Ian Wright:** *[laughing]* The boys don't care! They DON'T care! As long as Brando stays on the park, he can do sun salutations at the halfway line for all anyone minds! Downward dog, child's pose, warrior two — whatever it takes!
 
-**Roy Keane:** I have spent four decades in this game and I have never, EVER seen a centre-forward solve a cramp by going into a yoga pose mid-match. That is an over-35s innovation. That's going in a textbook somewhere.
+**Roy Keane:** I have spent four decades in this game and I have never, EVER seen a central midfielder solve a cramp by going into a yoga pose mid-match. That is an over-35s innovation. That's going in a textbook somewhere.
 
 **Jamie Carragher:** The lads are fine with it though. That's the point. If Brando needs to find his inner zen between phases of play to stay on the pitch, the entire squad will form a privacy circle around him while he breathes through his diaphragm.
 
