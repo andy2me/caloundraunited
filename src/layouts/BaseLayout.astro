@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Strip from '../components/Strip.astro';
+import RegoBanner from '../components/RegoBanner.astro';
 import WhatsAppCTA from '../components/WhatsAppCTA.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
@@ -10,7 +11,7 @@ type Props = {
   title: string;
   description?: string;
   page?: 'home' | 'fixtures' | 'table' | 'squad' | 'news' | 'contact';
-  /** Hide the fixture strip (e.g. on individual news posts if desired) */
+  /** Hide the sticky bar under the nav (e.g. on individual news posts if desired) */
   hideStrip?: boolean;
 };
 
@@ -40,7 +41,7 @@ const desc = description ?? `Caloundra United O35 — Sunshine Coast over-35s fo
 </head>
 <body data-page={page ?? ''}>
   <Nav active={page} />
-  {!hideStrip && <Strip />}
+  {!hideStrip && (site.offSeason ? <RegoBanner /> : <Strip />)}
   <slot />
   <WhatsAppCTA />
   <Footer />

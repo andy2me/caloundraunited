@@ -1,0 +1,16 @@
+---
+import { site } from '../data/site';
+
+// Off-season replacement for the fixture strip. Sits in the same sticky slot
+// under the nav and points everyone at the contact form. Flip
+// `site.offSeason` back to false in April and the fixture strip returns.
+---
+
+<a class="rego" href="/contact" aria-label={`Register your interest for the ${site.regoSeason} season`}>
+  <div class="container rego__inner">
+    <span class="rego__badge mono">Season {site.regoSeason}</span>
+    <span class="rego__msg">Registrations are open</span>
+    <span class="rego__sub mono no-mobile">Over 35s · All abilities · New players welcome</span>
+    <span class="rego__cta mono">Register your interest <span class="arrow">→</span></span>
+  </div>
+</a>
