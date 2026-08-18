@@ -1101,6 +1101,9 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
 .contact-play__legend .section__eyebrow { margin-bottom: 0; }
 .contact-play__optional { color: var(--muted); }
 .contact-play__row { display: grid; grid-template-columns: 140px 1fr; gap: 18px; }
+/* The class sets display:grid, which would otherwise beat the [hidden] UA rule
+   when the fieldset is toggled off for non-registration enquiries. */
+.contact-play[hidden] { display: none; }
 
 @media (max-width: 1024px) {
   .home-squad-teaser { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
