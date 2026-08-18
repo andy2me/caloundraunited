@@ -17,6 +17,10 @@ export const site = {
   whatsapp: 'WhatsApp Squad Chat',
   whatsappCommunity: 'WhatsApp Community',
   whatsappInvite: 'https://chat.whatsapp.com/L94yeKvl9WL0W1f9Rwuthw',
+  // Season's done: the fixture strip is swapped for the registration banner.
+  // Set back to false when the new season's fixtures land.
+  offSeason: true,
+  regoSeason: '2027',
   accent: '#C80B1F',
   displayFont: 'Barlow Condensed',
 } as const;

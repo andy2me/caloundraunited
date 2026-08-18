@@ -271,6 +271,79 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
   flex-shrink: 0;
 }
 
+/* ---------- Registration banner (off-season, replaces the fixture strip) ---------- */
+.rego {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 40;
+  display: block;
+  background: var(--red);
+  color: #fff;
+  border-bottom: 1px solid var(--red-deep);
+  transition: background .15s ease;
+}
+.rego:hover { background: var(--red-deep); }
+.rego:focus-visible { outline: 2px solid #fff; outline-offset: -4px; }
+.rego__inner {
+  min-height: var(--strip-h);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+.rego__badge {
+  flex: none;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: #fff;
+  color: var(--red);
+  padding: 5px 10px 4px;
+}
+.rego__msg {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rego__sub {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rego__cta {
+  flex: none;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+.rego:hover .rego__cta { border-bottom-color: #fff; }
+.rego:hover .rego__cta .arrow { transform: translateX(4px); }
+.rego__cta .arrow { transition: transform .15s ease; }
+
+@media (max-width: 720px) {
+  .rego__inner { flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; gap: 10px 12px; }
+  .rego__msg { font-size: 18px; white-space: normal; }
+  .rego__cta { margin-left: 0; flex-basis: 100%; }
+}
+
 /* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;
@@ -1007,7 +1080,27 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
 .home-recruit-cta { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px; margin-top: 64px; padding: 36px 0 0; border-top: 1px solid rgba(255,255,255,0.18); }
 .fixtures-summary { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; border: 1px solid var(--hairline); background: var(--paper); }
 .contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; }
+/* Grid/flex children default to min-width:auto, so a long <select> option can
+   push the whole form column past the viewport on phones. */
+.contact-grid > *, .contact-grid .field { min-width: 0; }
+.field select { width: 100%; max-width: 100%; }
 .contact-name-email { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.contact-play {
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--red);
+  margin: 0;
+  padding: 22px 24px 24px;
+  display: grid;
+  gap: 18px;
+  background: var(--paper);
+}
+.contact-play__legend {
+  padding: 0 8px;
+  margin-left: -8px;
+}
+.contact-play__legend .section__eyebrow { margin-bottom: 0; }
+.contact-play__optional { color: var(--muted); }
+.contact-play__row { display: grid; grid-template-columns: 140px 1fr; gap: 18px; }
 
 @media (max-width: 1024px) {
   .home-squad-teaser { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
@@ -1026,6 +1119,8 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
   .fixtures-summary > div:nth-last-child(-n+2) { border-bottom: none !important; }
   .fixtures-summary .mono + div { font-size: 26px !important; }
   .contact-name-email { grid-template-columns: 1fr; gap: 18px; }
+  .contact-play { padding: 20px 18px 22px; }
+  .contact-play__row { grid-template-columns: 1fr; }
 }
 
 /* ================================================================
