@@ -40,6 +40,11 @@ import { site } from '../data/site';
         <ul>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
           <li><a href={`tel:${site.coachPhone.replace(/\s+/g, '')}`}>Coach · {site.coachPhone}</a></li>
+          <li>
+            <a href={site.whatsappInvite} target="_blank" rel="noopener noreferrer" class="footer__wa">
+              {site.whatsappCommunity} →
+            </a>
+          </li>
         </ul>
       </div>
     </div>

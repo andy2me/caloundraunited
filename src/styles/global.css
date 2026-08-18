@@ -7,6 +7,8 @@
 :root {
   --red: #C80B1F;
   --red-deep: #8e0817;
+  --wa-green: #25D366;
+  --wa-green-deep: #1EBE5A;
   --ink: #0E0E10;
   --ink-soft: #1F1F22;
   --bone: #F5F2EC;
@@ -644,6 +646,8 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
 .footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .footer ul a { font-size: 14px; }
 .footer ul a:hover { color: var(--paper); }
+.footer__wa { color: var(--wa-green); }
+.footer ul a.footer__wa:hover { color: var(--wa-green); border-bottom: 1px solid var(--wa-green); }
 .footer__btm {
   margin-top: 28px;
   display: flex;
@@ -1522,6 +1526,129 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
     padding: 28px 20px;
   }
   .sponsors__logo:first-child { border-top: none; }
+}
+
+/* ---------- WhatsApp community band (all pages, above footer) ---------- */
+.wa {
+  background: var(--bone);
+  padding: 72px 0;
+  border-top: 1px solid var(--hairline);
+}
+.wa__panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 48px;
+  align-items: center;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 48px 52px;
+  border-top: 4px solid var(--wa-green);
+  overflow: hidden;
+  isolation: isolate;
+}
+.wa__panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(900px 240px at 6% 0%, rgba(37, 211, 102, 0.20), transparent 62%),
+    radial-gradient(700px 260px at 100% 100%, rgba(200, 11, 31, 0.16), transparent 62%);
+  pointer-events: none;
+}
+.wa__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.62);
+}
+.wa__glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  background: var(--wa-green);
+  color: var(--ink);
+}
+.wa__glyph svg { width: 22px; height: 22px; }
+.wa__title {
+  font-size: clamp(30px, 3.6vw, 48px);
+  margin: 16px 0 14px;
+}
+.wa__lede {
+  color: rgba(255,255,255,0.76);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 62ch;
+  margin: 0;
+}
+.wa__list {
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 32px;
+}
+.wa__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 14px;
+  border-left: 2px solid rgba(37, 211, 102, 0.55);
+}
+.wa__item-k {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--wa-green);
+}
+.wa__item-v {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.7);
+}
+.wa__action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  padding-left: 48px;
+  border-left: 1px solid rgba(255,255,255,0.14);
+}
+.wa__btn {
+  background: var(--wa-green);
+  color: var(--ink);
+  border-color: var(--wa-green);
+}
+.wa__btn:hover { background: var(--wa-green-deep); border-color: var(--wa-green-deep); color: var(--ink); }
+.wa__btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.wa__note {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.5);
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .wa__panel { grid-template-columns: 1fr; gap: 32px; padding: 40px 36px; }
+  .wa__action { padding-left: 0; padding-top: 28px; border-left: none; border-top: 1px solid rgba(255,255,255,0.14); }
+}
+
+@media (max-width: 720px) {
+  .wa { padding: 56px 0; }
+  .wa__panel { padding: 32px 24px; }
+  .wa__list { grid-template-columns: 1fr; }
+  .wa__btn { width: 100%; justify-content: center; }
 }
 
 /* ---------- Responsive ---------- */
