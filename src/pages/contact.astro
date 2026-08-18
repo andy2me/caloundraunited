@@ -54,7 +54,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
           <div class="field">
             <label for="topic">What's it about?</label>
             <select id="topic" name="topic" style="font-family:var(--body); font-size:16px; padding:14px 16px; background:var(--paper); color:var(--ink); border:1px solid var(--hairline); border-radius:0; outline:none;">
-              <option>Season {site.regoSeason} registration — I want to play</option>
+              <option data-play="true">Season {site.regoSeason} registration — I want to play</option>
               <option>Sponsorship enquiry</option>
               <option>Press / media</option>
               <option>General question</option>
@@ -62,7 +62,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
             </select>
           </div>
 
-          <fieldset class="contact-play">
+          <fieldset class="contact-play" id="playFields">
             <legend class="contact-play__legend">
               <span class="section__eyebrow">If you're looking to play <span class="contact-play__optional">· Optional</span></span>
             </legend>
@@ -193,6 +193,22 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     const form = document.getElementById('contactForm') as HTMLFormElement | null;
     const status = document.getElementById('formStatus') as HTMLElement | null;
     const btn = document.getElementById('submitBtn') as HTMLButtonElement | null;
+    const topic = document.getElementById('topic') as HTMLSelectElement | null;
+    const playFields = document.getElementById('playFields') as HTMLFieldSetElement | null;
+
+    // The player questions only apply to registration enquiries. They start
+    // visible — that option is selected by default, and it keeps the fields
+    // usable if this script never runs — and hide for every other topic.
+    // Disabling the fieldset also keeps its inputs out of the submitted data.
+    function syncPlayFields() {
+      if (!topic || !playFields) return;
+      const wantsToPlay = topic.selectedOptions[0]?.dataset.play === 'true';
+      playFields.hidden = !wantsToPlay;
+      playFields.disabled = !wantsToPlay;
+    }
+
+    topic?.addEventListener('change', syncPlayFields);
+    syncPlayFields();
 
     function setStatus(msg: string, kind: 'ok' | 'err' | 'info') {
       if (!status) return;
@@ -214,6 +230,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       if (honey?.checked) {
         setStatus('Thanks — we\'ll be in touch shortly.', 'ok');
         form.reset();
+        syncPlayFields();
         return;
       }
 
@@ -240,6 +257,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         if (res.ok && json.success) {
           setStatus('Thanks — we\'ll be in touch shortly.', 'ok');
           form.reset();
+          syncPlayFields();
         } else {
           const msg = (json && json.message) ? json.message : 'Something went wrong. Please email us directly.';
           setStatus(msg, 'err');
