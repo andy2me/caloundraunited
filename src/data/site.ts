@@ -15,6 +15,8 @@ export const site = {
   postMatchVenue: 'Jericho — Moffat Beach',
   instagram: '@caloundrautd35',
   whatsapp: 'WhatsApp Squad Chat',
+  whatsappCommunity: 'WhatsApp Community',
+  whatsappInvite: 'https://chat.whatsapp.com/L94yeKvl9WL0W1f9Rwuthw',
   accent: '#C80B1F',
   displayFont: 'Barlow Condensed',
 } as const;

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Strip from '../components/Strip.astro';
+import WhatsAppCTA from '../components/WhatsAppCTA.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
 
@@ -41,6 +42,7 @@ const desc = description ?? `Caloundra United O35 — Sunshine Coast over-35s fo
   <Nav active={page} />
   {!hideStrip && <Strip />}
   <slot />
+  <WhatsAppCTA />
   <Footer />
 </body>
 </html>
