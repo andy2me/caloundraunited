@@ -29,18 +29,18 @@ export type LadderRow = {
 };
 
 export const ladder: LadderRow[] = [
-  { club: 'Stella Swans',       short: 'SS', hue: 220, logo: '/assets/clubs/stella-swans.png',   played: 9,  won: 7, drawn: 1, lost: 1, gf: 56, ga: 16, points: 22, form: ['W','W','L','W','W'] },
-  { club: 'Buddina United',     short: 'BU', hue: 200, logo: '/assets/clubs/buddina-united.png', played: 8,  won: 6, drawn: 1, lost: 1, gf: 36, ga: 9,  points: 19, form: ['D','W','W','W','W'] },
-  { club: 'Currimundi Cobias',  short: 'CC', hue: 50,  logo: '/assets/clubs/currimundi.png',     played: 9,  won: 6, drawn: 1, lost: 2, gf: 38, ga: 12, points: 19, form: ['D','W','W','L','W'] },
-  { club: 'Caloundra United',   short: 'CU', hue: 0,                                              played: 10, won: 4, drawn: 0, lost: 6, gf: 31, ga: 31, points: 12, form: ['L','L','W','L','W'], isUs: true },
-  { club: 'Buderim Power',      short: 'BP', hue: 210, logo: '/assets/clubs/buderim.png',        played: 8,  won: 3, drawn: 3, lost: 2, gf: 19, ga: 23, points: 12, form: ['D','D','W','W','D'] },
-  { club: 'Unity Strikers',     short: 'US', hue: 240, logo: '/assets/clubs/unity-strikers.png', played: 10, won: 3, drawn: 2, lost: 5, gf: 21, ga: 34, points: 11, form: ['W','L','D','W','L'] },
-  { club: 'Coolum Hammers',     short: 'CH', hue: 30,  logo: '/assets/clubs/coolum-hammers.png', played: 10, won: 3, drawn: 1, lost: 6, gf: 24, ga: 45, points: 10, form: ['L','L','D','W','L'] },
-  { club: 'Eumundi Platinum',   short: 'EP', hue: 0,   logo: '/assets/clubs/eumundi.png',        played: 10, won: 0, drawn: 1, lost: 9, gf: 9,  ga: 64, points: 1,  form: ['L','L','D','L','L'] },
+  { club: 'Stella Swans',       short: 'SS', hue: 220, logo: '/assets/clubs/stella-swans.png',   played: 14, won: 11, drawn: 2, lost: 1,  gf: 76, ga: 20, points: 35, form: ['W','W','W','W','D'] },
+  { club: 'Buddina United',     short: 'BU', hue: 200, logo: '/assets/clubs/buddina-united.png', played: 14, won: 11, drawn: 2, lost: 1,  gf: 61, ga: 14, points: 35, form: ['W','W','W','W','D'] },
+  { club: 'Currimundi Cobias',  short: 'CC', hue: 50,  logo: '/assets/clubs/currimundi.png',     played: 14, won: 9,  drawn: 2, lost: 3,  gf: 57, ga: 16, points: 29, form: ['W','L','W','W','D'] },
+  { club: 'Buderim Power',      short: 'BP', hue: 210, logo: '/assets/clubs/buderim.png',        played: 14, won: 4,  drawn: 5, lost: 5,  gf: 31, ga: 35, points: 17, form: ['L','L','W','D','D'] },
+  { club: 'Unity Strikers',     short: 'US', hue: 240, logo: '/assets/clubs/unity-strikers.png', played: 14, won: 5,  drawn: 2, lost: 7,  gf: 27, ga: 39, points: 17, form: ['L','W','L','L','W'] },
+  { club: 'Caloundra United',   short: 'CU', hue: 0,                                              played: 14, won: 4,  drawn: 1, lost: 9,  gf: 32, ga: 39, points: 13, form: ['W','L','L','D','L'], isUs: true },
+  { club: 'Coolum Hammers',     short: 'CH', hue: 30,  logo: '/assets/clubs/coolum-hammers.png', played: 14, won: 4,  drawn: 1, lost: 9,  gf: 27, ga: 71, points: 13, form: ['L','L','L','L','W'] },
+  { club: 'Eumundi Platinum',   short: 'EP', hue: 0,   logo: '/assets/clubs/eumundi.png',        played: 14, won: 0,  drawn: 1, lost: 13, gf: 10, ga: 87, points: 1,  form: ['L','L','L','L','L'] },
 ];
 
 export const TOP4_CUTOFF = 4;
-export const ROUND = 13;
+export const ROUND = 14;
 
 /** Position of our team. */
 export const ourPosition = (): number => {
