@@ -8,7 +8,7 @@ readTime: "5 min read"
 heroLabel: "round06-buderim.jpg"
 image: "/assets/news/round-06-buderim-power.webp"
 videoUrl: "https://www.youtube.com/embed/Rwc-Fr1lGMA"
-feature: true
+feature: false
 heroOpponent: "Buderim"
 heroTagline: "Regroup, respond."
 heroLede: "Jared's clinical first-half hat-trick, twice teed up by Mark Brackley, had United 3-1 up at the break. Buderim answered with four unanswered after the restart to win 5-3 — a third straight defeat that nudges Caloundra out of the top four. Coolum away next, and it's a must-win."

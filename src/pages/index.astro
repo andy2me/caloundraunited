@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Placeholder from '../components/Placeholder.astro';
 import MatchReportHero from '../components/MatchReportHero.astro';
 import { stats, formLast5, lastFixture, outcome } from '../data/fixtures';
+import { ourPosition } from '../data/ladder';
 import { squad, teamAverageAge } from '../data/squad';
 import { sponsors } from '../data/sponsors';
 import { site } from '../data/site';
@@ -22,13 +23,38 @@ const teaserPlayers = teaserNames
   .filter((p): p is NonNullable<typeof p> => p !== undefined);
 
 const last = lastFixture();
-const heroEyebrow = last
+
+// Off-season: the homepage leads with the season wrap-up rather than the
+// last scoreline. Flip `site.offSeason` back to false when the new season's
+// fixtures land and the score-driven hero returns automatically.
+const wrapPost = posts.find((p) => p.id === 'season-wrap-2026');
+const seasonPos = ourPosition();
+const ord = (n: number): string => {
+  if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`;
+  return `${n}${['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'}`;
+};
+
+const heroEyebrow = site.offSeason
+  ? '2026 season · Wrapped'
+  : last
   ? `Latest result · Round ${stats.played.toString().padStart(2, '0')}`
   : 'Latest from the Park';
 
 const goalsLine = `${stats.gf} / ${stats.ga}`;
 const formLine = formLast5().join(' ');
 const teamAvgAge = teamAverageAge;
+
+const heroMeta = site.offSeason
+  ? [
+      { k: '2026 finish', v: `${ord(seasonPos)} of 8` },
+      { k: 'Record (W–D–L)', v: `${stats.won}–${stats.drawn}–${stats.lost}` },
+      { k: 'Goals (F / A)', v: goalsLine },
+    ]
+  : [
+      { k: 'Form (last 5)', v: formLine },
+      { k: 'Goals For / Against', v: goalsLine },
+      { k: 'Average age', v: String(teamAvgAge) },
+    ];
 
 const formatPostDate = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
 
@@ -44,7 +70,9 @@ const daysAgo = (d: Date) => {
   return formatPostDate(d);
 };
 
-const lastDateLabel = last ? daysAgo(new Date(last.date)) : (featurePost ? daysAgo(featurePost.data.date) : 'this season');
+const lastDateLabel = site.offSeason
+  ? 'Building towards 2027'
+  : last ? daysAgo(new Date(last.date)) : (featurePost ? daysAgo(featurePost.data.date) : 'this season');
 
 // True when a post should use the dynamic match-report graphic.
 // Explicit `image` frontmatter still wins.
@@ -64,14 +92,26 @@ const ytId = latestPost?.data.videoUrl?.match(/\/embed\/([^?/]+)/)?.[1];
 const heroVideoSrc = ytId
   ? `https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&disablekb=1`
   : undefined;
-const heroPoster = latestPost?.data.image ?? MATCH_REPORT_POSTER;
+const heroPoster = (site.offSeason ? wrapPost?.data.image : latestPost?.data.image) ?? MATCH_REPORT_POSTER;
 
 // Hero copy is fully derived from the latest played fixture + the matching
 // news post's optional `heroOpponent` / `heroTagline` / `heroLede` fields.
 // Future rounds: just publish the report — no homepage edits needed.
+// Off-season: the hero leads with the season wrap-up instead of a scoreline.
 const hero = (() => {
+  if (site.offSeason) {
+    return {
+      titleLine1: "That's 2026.",
+      titleLine2: 'Wrapped.',
+      tagline: 'Same team, fresh strapping.',
+      lede: wrapPost?.data.excerpt
+        ?? 'Sixth of eight, four wins and a draw, and a group that kept turning up. The full season wrap — and the road to 2027.',
+      reportHref: wrapPost ? `/news/${wrapPost.id}` : '/news',
+      ctaLabel: 'Read the season wrap',
+    };
+  }
   if (!last) {
-    return { titleLine1: 'Caloundra United.', titleLine2: '', tagline: 'New season.', lede: '', reportHref: '/news' };
+    return { titleLine1: 'Caloundra United.', titleLine2: '', tagline: 'New season.', lede: '', reportHref: '/news', ctaLabel: 'Read the report' };
   }
   const opp = latestPost?.data.heroOpponent ?? last.opponent;
   return {
@@ -80,6 +120,7 @@ const hero = (() => {
     tagline: latestPost?.data.heroTagline ?? '',
     lede: latestPost?.data.heroLede ?? latestPost?.data.excerpt ?? '',
     reportHref: latestPost ? `/news/${latestPost.id}` : '/news',
+    ctaLabel: 'Read the report',
   };
 })();
 ---
@@ -138,23 +179,19 @@ const hero = (() => {
           </h1>
           <p class="hero__lede">{hero.lede}</p>
           <div class="hero__cta">
-            <a class="btn btn--primary" href={hero.reportHref}>Read the report <span class="arrow">→</span></a>
-            <a class="btn btn--ghost" href="/fixtures">Full fixtures</a>
+            <a class="btn btn--primary" href={hero.reportHref}>{hero.ctaLabel} <span class="arrow">→</span></a>
+            {site.offSeason
+              ? <a class="btn btn--ghost" href="/contact">Play in 2027</a>
+              : <a class="btn btn--ghost" href="/fixtures">Full fixtures</a>}
           </div>
         </div>
         <div class="hero__meta">
-          <div class="hero__metaItem">
-            <span class="k">Form (last 5)</span>
-            <span class="v mono">{formLine}</span>
-          </div>
-          <div class="hero__metaItem">
-            <span class="k">Goals For / Against</span>
-            <span class="v mono">{goalsLine}</span>
-          </div>
-          <div class="hero__metaItem">
-            <span class="k">Average age</span>
-            <span class="v mono">{teamAvgAge}</span>
-          </div>
+          {heroMeta.map((m) => (
+            <div class="hero__metaItem">
+              <span class="k">{m.k}</span>
+              <span class="v mono">{m.v}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

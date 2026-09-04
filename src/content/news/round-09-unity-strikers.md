@@ -7,7 +7,7 @@ author: "Mingle Sport"
 readTime: "4 min read"
 heroLabel: "round09-unity.jpg"
 image: "/assets/news/round-09-unity-strikers.png"
-feature: true
+feature: false
 heroOpponent: "Unity Strikers"
 heroTagline: "Character shown. Points lost."
 heroLede: "Six midfielders missing. Two down inside twenty-one minutes. Jared from the spot, Luke off the bench, Matt straight into the assists column — Caloundra hauled it back to a one-goal game but couldn't find the leveller. Seventh on the table, Eumundi next, the equation simple."

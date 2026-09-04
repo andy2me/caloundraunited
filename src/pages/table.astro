@@ -2,6 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { ladder, ourPosition, barWidth, TOP4_CUTOFF } from '../data/ladder';
 import { stats } from '../data/fixtures';
+import { site } from '../data/site';
+
+const afterLabel = site.offSeason
+  ? 'Final standings'
+  : `After Round ${String(stats.played).padStart(2, '0')}`;
 
 const pos = ourPosition();
 const ord = (n: number): string => {
@@ -44,9 +49,9 @@ const axisLabels = [0, 1, 2, 3, 4, 5].map((i) => Math.round((axisCeil * i) / 5))
   <header class="pagehead" data-screen-label="01 Page header">
     <div class="container">
       <div class="pagehead__inner">
-        <div class="pagehead__eyebrow">2026 Season · Churches Sunshine Coast O35 Division · After Round {String(stats.played).padStart(2, '0')}</div>
+        <div class="pagehead__eyebrow">2026 Season · Churches Sunshine Coast O35 Division · {afterLabel}</div>
         <h1 class="pagehead__title">League Table</h1>
-        <p class="pagehead__lede">Eight clubs, fourteen rounds, three points for a win, one for a draw, and zero excuses for the bottom four. Updated within 24 hours of full-time.</p>
+        <p class="pagehead__lede">Eight clubs, fourteen rounds, three points for a win, one for a draw, and zero excuses for the bottom four. {site.offSeason ? 'Final 2026 standings — Stella Swans champions.' : 'Updated within 24 hours of full-time.'}</p>
       </div>
     </div>
   </header>
@@ -218,7 +223,7 @@ const axisLabels = [0, 1, 2, 3, 4, 5].map((i) => Math.round((axisCeil * i) / 5))
       </table>
 
       <p class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:24px;">
-        Source: Churches Sunshine Coast competition portal · Refreshed Mondays · Discrepancies? Email Andy.
+        Source: Churches Sunshine Coast competition portal · {site.offSeason ? 'Final 2026 table' : 'Refreshed Mondays'} · Discrepancies? Email Andy.
       </p>
     </div>
   </section>

@@ -7,7 +7,7 @@ author: "Mingle Sport"
 readTime: "4 min read"
 heroLabel: "round10-eumundi.jpg"
 image: "/assets/news/round-10-eumundi-magpies.jpeg"
-feature: true
+feature: false
 heroOpponent: "Eumundi"
 heroTagline: "Must-win, won."
 heroLede: "Brandan with the early opener, a controversial handball penalty pegging it back, then Christian and Jared closing it out in the second half. Caloundra climb to fourth — finals still in their hands with four to play."
