@@ -2,6 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { sortedByDate, byMonth, formatFixtureDate, outcome, stats, nextFixture, type Fixture, type Played } from '../data/fixtures';
 import { ourPosition, ladder, barWidth } from '../data/ladder';
+import { site } from '../data/site';
+
+const roundLabel = site.offSeason
+  ? '2026 Season · Complete'
+  : `2026 Season · After R${String(stats.played).padStart(2, '0')}`;
 
 const groups = byMonth(sortedByDate);
 const next = nextFixture();
@@ -28,9 +33,9 @@ const usForm = (() => {
   <header class="pagehead" data-screen-label="01 Page header">
     <div class="container">
       <div class="pagehead__inner">
-        <div class="pagehead__eyebrow">2026 Season · Churches Sunshine Coast O35 Division · After R{String(stats.played).padStart(2, '0')}</div>
+        <div class="pagehead__eyebrow">{roundLabel} · Churches Sunshine Coast O35 Division</div>
         <h1 class="pagehead__title">Fixtures &amp; Results</h1>
-        <p class="pagehead__lede">Fourteen rounds, eight clubs, no byes. Every kick-off, scoreline, and unfortunate match-day decision, in chronological order.</p>
+        <p class="pagehead__lede">Fourteen rounds, eight clubs, no byes. Every kick-off, scoreline, and unfortunate match-day decision from the 2026 season, in chronological order.</p>
       </div>
     </div>
   </header>
@@ -128,7 +133,9 @@ const usForm = (() => {
       </table>
 
       <p class="mono" style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:24px;">
-        All times AEST · Kick-off may vary based on pitch availability · Confirmed via WhatsApp by Thursday
+        {site.offSeason
+          ? 'All times AEST · 2026 season complete · 2027 fixtures land in autumn'
+          : 'All times AEST · Kick-off may vary based on pitch availability · Confirmed via WhatsApp by Thursday'}
       </p>
     </div>
   </section>
@@ -138,13 +145,13 @@ const usForm = (() => {
     <div class="container">
       <header class="section__head">
         <div>
-          <span class="section__eyebrow">Where we sit</span>
-          <h2 class="section__title">League Ladder</h2>
+          <span class="section__eyebrow">{site.offSeason ? 'How it finished' : 'Where we sit'}</span>
+          <h2 class="section__title">{site.offSeason ? 'Final 2026 Ladder' : 'League Ladder'}</h2>
         </div>
         <a class="section__more" href="/table">Full table →</a>
       </header>
 
-      <div class="ladder-chart" role="figure" aria-label={`Points by club, after Round ${stats.played}`}>
+      <div class="ladder-chart" role="figure" aria-label={site.offSeason ? 'Final 2026 points by club' : `Points by club, after Round ${stats.played}`}>
         {ladderTop8.map((row, i) => {
           const position = i + 1;
           const tier = tierFor(row, position);
@@ -186,7 +193,7 @@ const usForm = (() => {
         })}
       </div>
 
-      <p class="ladder-foot">Bar length proportional to points · After Round {String(stats.played).padStart(2, '0')} · <a href="/table" style="color:var(--red); border-bottom:1px solid var(--red); padding-bottom:1px;">See full table →</a></p>
+      <p class="ladder-foot">Bar length proportional to points · {site.offSeason ? 'Final 2026 standings' : `After Round ${String(stats.played).padStart(2, '0')}`} · <a href="/table" style="color:var(--red); border-bottom:1px solid var(--red); padding-bottom:1px;">See full table →</a></p>
     </div>
   </section>
 
