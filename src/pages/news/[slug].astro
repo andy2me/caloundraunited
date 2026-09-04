@@ -190,6 +190,74 @@ const older = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
     color: var(--muted);
     font-style: italic;
   }
+  .post-body :global(.awards) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 28px 0 36px;
+  }
+  .post-body :global(.award-card) {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+  }
+  .post-body :global(.award-card__photo) {
+    display: flex;
+    aspect-ratio: 4/3;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--bone);
+    overflow: hidden;
+  }
+  .post-body :global(.award-card__photo img) {
+    flex: 1 1 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    margin: 0;
+    border: 0;
+  }
+  .post-body :global(.award-card__photo--split img:first-child) {
+    border-right: 1px solid var(--hairline);
+  }
+  .post-body :global(.award-card__body) { padding: 12px 14px 16px; }
+  .post-body :global(.award-card__cat) {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+  .post-body :global(.award-card__name) {
+    font-family: var(--display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 19px;
+    line-height: 1.1;
+  }
+  .post-body :global(.award-card__value) {
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--ink);
+  }
+  .post-body :global(.award-card__value small) {
+    margin-left: 6px;
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  @media (max-width: 480px) {
+    .post-body :global(.awards) { grid-template-columns: 1fr; }
+  }
   .post-video {
     position: relative;
     width: 100%;

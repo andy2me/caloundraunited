@@ -24,6 +24,104 @@ Up top, it went down to the wire. Stella Swans and Buddina United both finished 
 
 Thank you to every player, coach, volunteer and long-suffering partner who made 2026 a season worth being part of. On to 2027 — same team, fresh strapping.
 
+### 2026 Season Awards
+
+The app doesn't lie, even when we wish it would. Here's who cleaned up in the leaderboards this year — golden boots, dodgy tackles and all.
+
+<div class="awards">
+  <article class="award-card">
+    <div class="award-card__photo">
+      <img src="/assets/players/player-bullock-aaron.webp" alt="Aaron Bullock" loading="lazy" />
+    </div>
+    <div class="award-card__body">
+      <span class="award-card__cat">Top Scorer</span>
+      <div class="award-card__name">Aaron Bullock</div>
+      <div class="award-card__value">17<small>goals</small></div>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <div class="award-card__photo">
+      <img src="/assets/players/player-sammut.webp" alt="Brandan Sammut" loading="lazy" />
+    </div>
+    <div class="award-card__body">
+      <span class="award-card__cat">Minutes Played</span>
+      <div class="award-card__name">Brandan Sammut</div>
+      <div class="award-card__value">1,521<small>mins</small></div>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <div class="award-card__photo award-card__photo--split">
+      <img src="/assets/players/player-bullock-jared.webp" alt="Jared Bullock" loading="lazy" />
+      <img src="/assets/players/player-sammut.webp" alt="Brandan Sammut" loading="lazy" />
+    </div>
+    <div class="award-card__body">
+      <span class="award-card__cat">MVP (Joint)</span>
+      <div class="award-card__name">Jared Bullock &amp; Brandan Sammut</div>
+      <div class="award-card__value">3<small>each</small></div>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <div class="award-card__photo">
+      <img src="/assets/players/player-twomey.webp" alt="Andy Twomey" loading="lazy" />
+    </div>
+    <div class="award-card__body">
+      <span class="award-card__cat">Workhorse</span>
+      <div class="award-card__name">Andy Twomey</div>
+      <div class="award-card__value">4<small>awards</small></div>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <div class="award-card__photo">
+      <img src="/assets/players/player-bullock-jared.webp" alt="Jared Bullock" loading="lazy" />
+    </div>
+    <div class="award-card__body">
+      <span class="award-card__cat">Playmaker</span>
+      <div class="award-card__name">Jared Bullock</div>
+      <div class="award-card__value">4<small>awards</small></div>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <div class="award-card__photo award-card__photo--split">
+      <img src="/assets/players/player-twomey.webp" alt="Andy Twomey" loading="lazy" />
+      <img src="/assets/players/player-morgan.webp" alt="Jezz Morgan" loading="lazy" />
+    </div>
+    <div class="award-card__body">
+      <span class="award-card__cat">Matches Played (Joint)</span>
+      <div class="award-card__name">Andy Twomey &amp; Jezz Morgan</div>
+      <div class="award-card__value">18<small>each</small></div>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <div class="award-card__photo">
+      <img src="/assets/players/player-hope.webp" alt="Dan Hope" loading="lazy" />
+    </div>
+    <div class="award-card__body">
+      <span class="award-card__cat">Training Attendance</span>
+      <div class="award-card__name">Dan Hope</div>
+      <div class="award-card__value">19<small>sessions</small></div>
+    </div>
+  </article>
+
+  <article class="award-card">
+    <div class="award-card__photo">
+      <img src="/assets/players/player-robertson.webp" alt="Nigel Robertson" loading="lazy" />
+    </div>
+    <div class="award-card__body">
+      <span class="award-card__cat">Yellow Cards</span>
+      <div class="award-card__name">Nigel Robertson</div>
+      <div class="award-card__value">3<small>cautions</small></div>
+    </div>
+  </article>
+</div>
+
+Special mention to Aaron Bullock for also topping the assists chart alongside the golden boot — greedy, really, when you think about it.
+
 ### Special Mentions
 
 Two blokes earn a special mention as the season closes out.
@@ -34,7 +132,7 @@ Two blokes earn a special mention as the season closes out.
 
 ### Thank You to Our Sponsors
 
-None of this happens without the people who back us off the pitch — because strapping tape and Voltaren don't pay for themselves. A huge thank you to **Jericho** and **Max Property** for their support of Caloundra United throughout the 2026 season. Your backing keeps this team running, from kit to fields to whatever else keeps a bunch of 35-plus-year-olds vaguely functional on a Friday night. On behalf of the whole team — cheers.
+None of this happens without the people who back us off the pitch — because strapping tape and Voltaren don't pay for themselves. A huge thank you to [**Jericho**](https://www.instagram.com/jericho_moffat_beach/) and [**Max Property**](https://maxproperty.au/) for their support of Caloundra United throughout the 2026 season. Your backing keeps this team running, from kit to fields to whatever else keeps a bunch of 35-plus-year-olds vaguely functional on a Friday night. On behalf of the whole team — cheers.
 
 ---
 
