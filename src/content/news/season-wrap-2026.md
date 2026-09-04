@@ -6,6 +6,7 @@ excerpt: "Sixth of eight, four wins and a draw, and a group that kept turning up
 author: "By the bench"
 readTime: "7 min read"
 heroLabel: "season-wrap-2026.jpg"
+image: "/assets/news/season-wrap-2026.png"
 feature: true
 ---
 
