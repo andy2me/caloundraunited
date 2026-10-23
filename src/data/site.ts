@@ -14,6 +14,8 @@ export const site = {
   kickoff: '6:30 / 8:15pm',
   postMatchVenue: 'Jericho — Moffat Beach',
   instagram: '@caloundrautd35',
+  instagramUrl: 'https://www.instagram.com/caloundra_united',
+  facebookUrl: 'https://www.facebook.com/share/183D9qNog1',
   whatsapp: 'WhatsApp Squad Chat',
   whatsappCommunity: 'WhatsApp Community',
   whatsappInvite: 'https://chat.whatsapp.com/L94yeKvl9WL0W1f9Rwuthw',

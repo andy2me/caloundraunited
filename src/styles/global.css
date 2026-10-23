@@ -721,6 +721,19 @@ p { margin: 0 0 1em 0; max-width: 62ch; }
 .footer ul a:hover { color: var(--paper); }
 .footer__wa { color: var(--wa-green); }
 .footer ul a.footer__wa:hover { color: var(--wa-green); border-bottom: 1px solid var(--wa-green); }
+.footer__social { display: flex; gap: 14px; margin-top: 4px; }
+.footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+  transition: background 0.15s, color 0.15s;
+}
+.footer__social a:hover { background: var(--red); color: #fff; }
 .footer__btm {
   margin-top: 28px;
   display: flex;
